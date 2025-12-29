@@ -1,23 +1,6 @@
 "use client";
 import {useState} from "react";
-
-const Heading = ({title, description, children}) => 
-{
-  const myStyling = {
-    padding: "16px",
-    fontweight: "bold",
-  };
-
-  return (
-    <div>
-      <div style={myStyling}>
-        <h2>{title}</h2>
-        <span>{description}</span>
-      </div>
-      {children}
-    </div>
-  );
-};
+import {Heading} from "./heading";
 
 export default function Page()
 {
