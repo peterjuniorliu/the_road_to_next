@@ -1,6 +1,7 @@
 "use client";
+import {useState} from "react";
 
-const Heading = ({title, description}) => 
+const Heading = ({title, description, children}) => 
 {
   const myStyling = {
     padding: "16px",
@@ -8,9 +9,12 @@ const Heading = ({title, description}) =>
   };
 
   return (
-    <div style={myStyling}>
-      <h2>{title}</h2>
-      <span>{description}</span>
+    <div>
+      <div style={myStyling}>
+        <h2>{title}</h2>
+        <span>{description}</span>
+      </div>
+      {children}
     </div>
   );
 };
@@ -19,17 +23,19 @@ export default function Page()
 {
   const title = "Hello Page";
   const myDescription = "This is a React Primer ...";
+  const [upvote, setUpvote] = useState(0);
 
   const handleUpvote = () => 
   {
-    console.log("Upvoting~");
-  }
+    setUpvote(upvote + 1);
+  };
 
   return (
     <div>
-      <Heading title={title} description={myDescription} />
+      <Heading title={title} description={myDescription}>
+        <button onClick={handleUpvote}>Upvote</button>
+      </Heading>
       <p>Some contents ...</p>
-      <button onClick={handleUpvote}>Upvote</button>
     </div>
   );
 }
