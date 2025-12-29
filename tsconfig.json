@@ -30,7 +30,7 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-, "app/page.jsx", "app/layout.jsx"  ],
+, "app/page.jsx", "app/layout.jsx", "tickets/ticket-id/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]
