@@ -1,6 +1,12 @@
 import Link from "next/link";
 import {initialTickets} from "../data";
-import {ticketsPath} from "../paths";
+import {ticketPath} from "../paths";
+
+const TICKET_ICONS = {
+    OPEN: "O",
+    DONE: "X",
+    IN_PROGRESS: ">",
+};
 
 const TicketsPage = () => 
 {
@@ -8,9 +14,12 @@ const TicketsPage = () =>
         <div>
             {initialTickets.map(ticket => (
                 <div key={ticket.id}>
+                    <div>
+                        {TICKET_ICONS[ticket.status]}
+                    </div>
                     <h2 className="text-lg">  {ticket.title}
                     </h2>
-                    <Link href={ticketsPath()} className="text-sm underline">
+                    <Link href={ticketPath(ticket.id)} className="text-sm underline">
                         View
                     </Link>
                 </div>
