@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import Link from "next/link";
 import {homePath, ticketsPath} from "./paths";
 import {Inter} from "next/font/google";
+import "./globals.css";
 
 const inter = Inter({subsets: ["latin"]});
 
