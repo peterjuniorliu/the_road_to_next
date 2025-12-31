@@ -26,7 +26,7 @@ export default function RootLayout({
             </Link>
           </div>
           <div>
-            <Link href={ticketsPath()} className="text-sm underline">
+            <Link href={ticketsPath()} className="text-sm font-bold">
               Tickets
             </Link>
           </div>

@@ -6,7 +6,7 @@ const HomePage = () =>
     return (
         <div>
             <h2 className="text-lg">Home Page</h2>
-            <Link href={ticketsPath()} className="underline">Go to Tickets</Link>
+            <Link href={ticketsPath()} className="text-lg">Go to Tickets</Link>
         </div>
     );
 };
