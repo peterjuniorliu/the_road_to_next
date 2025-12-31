@@ -11,7 +11,7 @@ const CheckIcon = () =>
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-1 h-1"
+        className="w-5 h-5"
     >
         <path 
             strokeLinecap="round"
@@ -29,7 +29,7 @@ const PencilIcon = () =>
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-1 h-1"
+        className="w-5 h-5"
     >
         <path
             strokeLinecap="round"
@@ -47,7 +47,7 @@ const DocumentIcon = () =>
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-1 h-1"
+        className="w-5 h-5"
     >
         <path
             strokeLinecap="round"
@@ -86,28 +86,28 @@ const TicketsPage = () =>
                         key={ticket.id}
                         className="w-full max-w-[420px] p-4 border border-slate-100 rounded flex items-start gap-x-3"
                         >
-                        {/* 图标 */}
-                        <div className="shrink-0 mt-0.5 text-slate-700">
-                            <Icon />
-                        </div>
+                            {/* 图标 */}
+                            <div className="shrink-0 mt-0.5 text-slate-700">
+                                <Icon />
+                            </div>
 
-                        {/* 文本列：标题+内容 */}
-                        <div className="min-w-0 flex-1 flex flex-col gap-y-1">
-                            <h2 className="text-lg font-semibold leading-6 truncate">
-                            {ticket.title}
-                            </h2>
-                            <p className="text-sm text-slate-500 leading-5 line-clamp-2">
-                            {ticket.content}
-                            </p>
-                        </div>
+                            {/* 文本列：标题+内容 */}
+                            <div className="min-w-0 flex-1 flex flex-col gap-y-1">
+                                <h2 className="text-lg font-semibold leading-6 truncate">
+                                {ticket.title}
+                                </h2>
+                                <p className="text-sm text-slate-500 leading-5 line-clamp-2">
+                                {ticket.content}
+                                </p>
+                            </div>
 
-                        {/* 右侧操作 */}
-                        <Link
-                            href={ticketPath(ticket.id)}
-                            className="shrink-0 text-sm underline text-slate-600 hover:text-slate-900"
-                        >
-                            View
-                        </Link>
+                            {/* 右侧操作 */}
+                            <Link
+                                href={ticketPath(ticket.id)}
+                                className="shrink-0 text-sm underline text-slate-600 hover:text-slate-900"
+                            >
+                                View
+                            </Link>
                         </div>
                     );
                 })}
