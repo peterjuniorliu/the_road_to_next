@@ -15,9 +15,11 @@ const TicketPage = async ({params}: TicketPageProps) =>
 
     if (!ticket) {
         return (
-            <div className="text-sm text-slate-600">
-                Ticket not found: {ticketId}. Available IDs:{" "}
-                {initialTickets.map(ticket => ticket.id).join(", ")}
+            <div>
+                <div className="text-sm text-slate-600">
+                    Ticket not found: {ticketId}. Available IDs:{" "}
+                    {initialTickets.map(ticket => ticket.id).join(", ")}
+                </div>
             </div>
         );
     }
