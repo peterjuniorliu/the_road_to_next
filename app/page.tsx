@@ -13,9 +13,9 @@ const HomePage = () =>
                     Your home place to start
                 </p>
             </div>
-            <div className="flex-1 flex flex-col items-center">
-                <Link href={ticketsPath()} className="text-lg">Go to Tickets</Link>
-            </div>
+            <Link href={ticketsPath()} className="flex-1 flex flex-col items-center gap-y-4">
+                Go to Tickets
+            </Link>
         </div>
     );
 };
