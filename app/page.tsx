@@ -9,13 +9,10 @@ const HomePage = () =>
                 <h2 className="text-3xl font-bold tracking-tight">
                     Home
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                    Your home place to start
+                <p className="mt-2 text-5xl font-bold text-center text-muted-foreground">
+                    Your home place to start~
                 </p>
             </div>
-            <Link href={ticketsPath()} className="flex-1 flex flex-col items-center gap-y-4">
-                Go to Tickets
-            </Link>
         </div>
     );
 };

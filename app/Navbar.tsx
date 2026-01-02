@@ -14,13 +14,12 @@ export const metadata: Metadata = {
   description: "My Road to Next application ...",
 };
 
-export default function Navbar() {
+export default function Navbar() 
+{
   const pathname = usePathname();
   const onTicketsPage = pathname === "/tickets";
   const onTicketDetail = pathname.startsWith("/tickets/");
-  const action = onTicketDetail ? {href: ticketsPath(), label: "Back to Tickets"} :
-  onTicketsPage ?
-  {href: homePath(), label: "Back to Home"} : {href: ticketsPath(), label: "Tickets"};
+  const action = onTicketDetail ? {href: ticketsPath(), label: "Back to Tickets"}: onTicketsPage ? {href: homePath(), label: "Back to Home"}: {href: ticketsPath(), label: "Go to Tickets"};
 
   return (
     <html lang="en">
@@ -31,6 +30,9 @@ export default function Navbar() {
               <Ticket className="h-5 w-5" />
               <span>TicketBounty</span>
             </div>
+            <Link href={action.href} className="text-sm font-semibold px-4 py-1.5 rounded-md bg-yellow-400 text-black hover:bg-yellow-500 transition">
+              {action.label}
+            </Link>
           </div>
         </nav>
       </body>  

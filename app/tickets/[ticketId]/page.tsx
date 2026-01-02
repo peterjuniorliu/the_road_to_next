@@ -16,7 +16,7 @@ const TicketPage = async ({params}: TicketPageProps) =>
     if (!ticket) {
         return (
             <div>
-                <div className="text-sm text-slate-600">
+                <div className="mt-2 text-5xl font-bold text-center text-muted-foreground">
                     Ticket not found: {ticketId}. Available IDs:{" "}
                     {initialTickets.map(ticket => ticket.id).join(", ")}
                 </div>
@@ -26,8 +26,8 @@ const TicketPage = async ({params}: TicketPageProps) =>
 
     return (
         <div>
-            <h2 className="text-lg">        {ticket.title}</h2>
-            <p className="text-sm">{ticket.status}</p>
+            <h2 className="text-3xl font-bold tracking-tight">{ticket.title}</h2>
+            <p className="mt-2 text-5xl font-bold text-center text-muted-foreground">{ticket.status}</p>
         </div>
     );
 };

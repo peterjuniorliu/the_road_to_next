@@ -73,18 +73,20 @@ const TicketsPage = () =>
                 <h1 className="text-3xl font-bold tracking-tight">
                     TicketsPage
                 </h1>
-                <p className="text-sm text-muted-foreground">
-                    All your tickets at one place
-                </p>
             </div>
             <div className="flex-1 flex flex-col items-center gap-y-4">
+                <div>
+                    <p className="mt-2 text-5xl font-bold text-center text-muted-foreground">
+                        All your tickets at one place~
+                    </p>
+                </div>
                 {initialTickets.map(ticket => {
                     const Icon = TICKET_ICONS[ticket.status];
 
                     return (
                         <div
                         key={ticket.id}
-                        className="w-full max-w-[420px] p-4 border border-slate-100 rounded flex items-start gap-x-3"
+                        className="w-full max-w-[680px] p-6 border border-slate-200 rounded-xl shadow-sm bg-white flex items-start gap-x-4"
                         >
                             {/* 图标 */}
                             <div className="shrink-0 mt-0.5 text-slate-700">
