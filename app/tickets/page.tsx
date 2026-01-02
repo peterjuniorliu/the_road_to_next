@@ -75,7 +75,7 @@ const TicketsPage = () =>
                 </h1>
             </div>
             <div className="flex-1 flex flex-col items-center gap-y-4">
-                <div>
+                <div className="mb-26">
                     <p className="mt-2 text-5xl font-bold text-center text-muted-foreground">
                         All your tickets at one place~
                     </p>
@@ -95,10 +95,10 @@ const TicketsPage = () =>
 
                             {/* 文本列：标题+内容 */}
                             <div className="min-w-0 flex-1 flex flex-col gap-y-1">
-                                <h2 className="text-lg font-semibold leading-6 truncate">
+                                <h2 className="text-xl font-semibold leading-7 truncate">
                                 {ticket.title}
                                 </h2>
-                                <p className="text-sm text-slate-500 leading-5 line-clamp-2">
+                                <p className="text-base text-slate-600 leading-6 line-clamp-2">
                                 {ticket.content}
                                 </p>
                             </div>
@@ -106,7 +106,7 @@ const TicketsPage = () =>
                             {/* 右侧操作 */}
                             <Link
                                 href={ticketPath(ticket.id)}
-                                className="shrink-0 text-sm underline text-slate-600 hover:text-slate-900"
+                                className="shrink-0 inline-flex items-centerjustify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
                             >
                                 View
                             </Link>
