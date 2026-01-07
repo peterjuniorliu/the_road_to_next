@@ -1,4 +1,9 @@
+import Link from "next/link";
 import {initialTickets} from "../../data";
+import {ticketsPath} from "../../paths";
+import {EmptyState} from "../../../components/empty-state";
+import {Heading} from "../../../components/heading";
+import {TicketStatusBadge} from "../../../components/ticket-status-badge";
 
 type TicketPageProps = {
     params: Promise<{
@@ -15,19 +20,29 @@ const TicketPage = async ({params}: TicketPageProps) =>
 
     if (!ticket) {
         return (
-            <div>
-                <div className="mt-2 text-5xl font-bold text-center text-muted-foreground">
-                    Ticket not found: {ticketId}. Available IDs:{" "}
-                    {initialTickets.map(ticket => ticket.id).join(", ")}
-                </div>
-            </div>
+            <EmptyState
+                title="Ticket not found"
+                description={`Ticket ID "${ticketId}" does not exist.`}
+                action={
+                    <Link href={ticketsPath()} className="text-sm underline">
+                        Back to tickets
+                    </Link>
+                }
+                className="max-w-xl"
+            />
         );
     }
 
     return (
-        <div>
-            <h2 className="text-3xl font-bold tracking-tight">{ticket.title}</h2>
-            <p className="mt-2 text-5xl font-bold text-center text-muted-foreground">{ticket.status}</p>
+        <div className="flex flex-col gap-y-6">
+            <Heading
+                title={ticket.title}
+                subtitle="Ticket detail"
+                actions={<TicketStatusBadge status={ticket.status} />}
+            />
+            <p className="whitespace-pre-wrap text-sm text-muted-foreground">
+                {ticket.content}
+            </p>
         </div>
     );
 };
