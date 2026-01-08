@@ -1,5 +1,5 @@
 import "./globals.css";
-import Navbar from "./Navbar";
+import {Header} from "../components/header";
 import type {Metadata} from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Navbar />
+        <Header />
         <main
           className="
             min-h-screen flex-1
