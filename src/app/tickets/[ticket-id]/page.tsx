@@ -1,21 +1,18 @@
-import Link from "next/link";
 import {Placeholder} from "../../../components/placeholder";
-import {Button} from "../../../components/ui/button";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../components/ui/card";
 import {initialTickets} from "../../data";
 import {TicketItem} from "../../../features/ticket/components/ticket-item";
-import {ticketsPath} from "../../paths";
 import {buildTicketNotFoundInfo} from "../../error-info";
 
-export type TicketPageProps = {
-    params: Promise<{
-        ticketId: string;
-    }>;
+type TicketPageProps = {
+    params: { 
+        "ticket-id": string;
+    }
 };
 
-const TicketPage = async ({params}: TicketPageProps) => 
+const TicketPage = ({params}: TicketPageProps) => 
 {
-    const {ticketId} = await params;
+    const ticketId = params["ticket-id"];
     const ticket = initialTickets.find(ticket => ticket.id === ticketId);
 
     if (!ticket) {
