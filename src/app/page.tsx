@@ -8,9 +8,9 @@ const HomePage = () =>
         <div className="flex-1 flex flex-col gap-y-8">
             <Heading title="Home" />
             <div className="flex-1 flex-col items-center">
-                <Link href={ticketsPath()} className="text-sm underline">
+                <div className="flex text-3xl items-center justify-center">
                     Your home place to start
-                </Link>
+                </div>
             </div>
         </div>
     );

@@ -36,19 +36,17 @@ const TicketPage = async ({params}: TicketPageProps) =>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-y-4 text-sm">
                             <dl className="grid gap-2">
-                                {errorInfo.context.map((item) => (
-                                    <div
-                                        key={item.label}
-                                        className="flex items-center justify-between gap-x-4"
-                                    >
-                                        <dt className="text-muted-foreground">
-                                            {item.label}
-                                        </dt>
-                                        <dd className="font-medium">
-                                            {item.value}
-                                        </dd>
-                                    </div>
-                                ))}
+                                <div
+                                    key={errorInfo.context.label}
+                                    className="flex items-center justify-between gap-x-4"
+                                >
+                                    <dt className="text-muted-foreground">
+                                        {errorInfo.context.label}
+                                    </dt>
+                                    <dd className="font-medium">
+                                        {errorInfo.context.value}
+                                    </dd>
+                                </div>
                             </dl>
                             <div>
                                 <p className="text-muted-foreground">

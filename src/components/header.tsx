@@ -3,6 +3,7 @@ import {buttonVariants} from "../components/ui/button";
 import {usePathname} from "next/navigation";
 import {LucideKanban} from "lucide-react";
 import Link from "next/link";
+import {ThemeSwitcher} from "../components/theme/theme-switcher";
 import {homePath, ticketsPath} from "../app/paths";
  
 const Header = () => 
@@ -19,7 +20,8 @@ const Header = () =>
                 <LucideKanban />
                 <h1 className="text-lg font-semibold">TicketBounty</h1>
             </div>
-            <div>
+            <div className="flex align-items gap-x-2">
+                <ThemeSwitcher />
                 <Link
                 href={action.href}
                 className={buttonVariants({variant: "default"})}
