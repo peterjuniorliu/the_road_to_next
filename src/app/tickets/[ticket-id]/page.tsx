@@ -5,14 +5,14 @@ import {TicketItem} from "../../../features/ticket/components/ticket-item";
 import {buildTicketNotFoundInfo} from "../../error-info";
 
 type TicketPageProps = {
-    params: { 
+    params: Promise<{ 
         "ticket-id": string;
-    }
+    }>;
 };
 
-const TicketPage = ({params}: TicketPageProps) => 
+const TicketPage = async ({params}: TicketPageProps) => 
 {
-    const ticketId = params["ticket-id"];
+    const {["ticket-id"]: ticketId} = await params;
     const ticket = initialTickets.find(ticket => ticket.id === ticketId);
 
     if (!ticket) {

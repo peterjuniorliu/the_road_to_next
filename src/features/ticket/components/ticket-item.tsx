@@ -44,7 +44,7 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
                         "line-clamp-3": !isDetail
                     })}
                     >
-                        {ticket.content}
+                        {ticket.status}
                     </span>
                 </CardContent>
             </Card>
