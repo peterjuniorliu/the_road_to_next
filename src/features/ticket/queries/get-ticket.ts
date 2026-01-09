@@ -10,6 +10,6 @@ export const getTicket = async (id: string): Promise<Ticket | null> =>
     const maybeTicket = initialTickets.find(ticket => ticket.id === id);
 
     return new Promise(resolve => {
-        resolve(maybeTicket) || null;
+        resolve(maybeTicket || null);
     });
 };
