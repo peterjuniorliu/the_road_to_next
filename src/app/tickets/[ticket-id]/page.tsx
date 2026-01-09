@@ -1,6 +1,6 @@
 import {Placeholder} from "../../../components/placeholder";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../components/ui/card";
-import {initialTickets} from "../../data";
+import {getTicket} from "../../../features/ticket/queries/get-ticket";
 import {TicketItem} from "../../../features/ticket/components/ticket-item";
 import {buildTicketNotFoundInfo} from "../../error-info";
 
@@ -13,7 +13,7 @@ type TicketPageProps = {
 const TicketPage = async ({params}: TicketPageProps) => 
 {
     const {["ticket-id"]: ticketId} = await params;
-    const ticket = initialTickets.find(ticket => ticket.id === ticketId);
+    const ticket = await getTicket(ticketId);
 
     if (!ticket) {
         const errorInfo = buildTicketNotFoundInfo(ticketId);
