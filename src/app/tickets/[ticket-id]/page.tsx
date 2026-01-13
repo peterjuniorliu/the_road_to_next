@@ -4,6 +4,8 @@ import {getTicket} from "../../../features/ticket/queries/get-ticket";
 import {TicketItem} from "../../../features/ticket/components/ticket-item";
 import {buildTicketNotFoundInfo} from "../../error-info";
 
+export const dynamic = "force-dynamic";
+
 type TicketPageProps = {
     params: Promise<{ 
         "ticket-id": string;
