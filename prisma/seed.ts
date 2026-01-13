@@ -4,6 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
 const connectionString = process.env["DATABASE_URL"];
+
 if (!connectionString) {
     throw new Error("DATABASE_URL is not set");
 }
@@ -14,19 +15,19 @@ const prisma = new PrismaClient({ adapter });
 
 const tickets = [
     {
-        // id: "1",
+        id: "1",
         title: "Ticket 1",
         content: "First ticket from DB.",
         status: "DONE" as const
     },
     {
-        // id: "2",
+        id: "2",
         title: "Ticket 2",
         content: "Second ticket from DB.",
         status: "OPEN" as const
     },
     {
-        // id: "3",
+        id: "3",
         title: "Ticket 3",
         content: "Third ticket from DB.",
         status: "IN_PROGRESS" as const
