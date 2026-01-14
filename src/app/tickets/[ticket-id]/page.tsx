@@ -1,3 +1,4 @@
+import {Heading} from "../../../components/heading";
 import {Placeholder} from "../../../components/placeholder";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../components/ui/card";
 import {getTicket} from "../../../features/ticket/queries/get-ticket";
@@ -70,8 +71,16 @@ const TicketPage = async ({params}: TicketPageProps) =>
     }
 
     return (
-        <div className="flex justify-center animate-fade-from-top">
-            <TicketItem ticket={ticket} isDetail />
+        <div className="flex-1 flex flex-col gap-y-8">
+            <Heading title={ticket.title} />
+            <div className="px-8 text-center">
+                <p className="text-xl font-semibold">
+                    {ticket.content}
+                </p>
+                <p className="mt-2 text-lg text-muted-foreground">
+                    {ticket.status}
+                </p>
+            </div>
         </div>
     );
 };
