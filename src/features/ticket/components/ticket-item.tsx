@@ -22,24 +22,26 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
     );
 
     return (
-        <div className={clsx("mx-auto flex items-center justify-center gap-x-3", {
+        <div className={clsx("w-full", {
             "max-w-[500px]": isDetail,
             "max-w-[420px]": !isDetail
         })}
         >
-            <div className="w-full max-w-[280px]">
-                <CardContent className="text-center">
-                    <span className={clsx("whitespace-break-spaces text-lg", {
-                        "line-clamp-3": !isDetail
-                    })}
-                    >
+            <CardContent className="flex items-center py-6">
+                <span className={clsx("whitespace-break-spaces text-lg", {
+                    "line-clamp-3": !isDetail
+                })}
+                >
+                    <span className="mx-auto block w-[360px] translate-x-40 text-left">
                         {ticket.status}
                     </span>
-                </CardContent>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-                {isDetail ? null : detailButton}
-            </div>
+                </span>
+            </CardContent>
+            {isDetail ? null : (
+                <div className="absolute right-6 top-1/2 -translate-y-1/2">
+                    {detailButton}
+                </div>
+            )}
         </div>
     );
 };

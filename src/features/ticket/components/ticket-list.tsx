@@ -10,9 +10,9 @@ const TicketList = async () =>
     return (
         <div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-from-top">
             {tickets.map(ticket => (
-                <Card key={ticket.id} className="w-full max-w-[520px]">
-                    <CardHeader className="items-center text-center">
-                        <CardTitle className="flex items-center justify-center gap-x-2">
+                <Card key={ticket.id} className="relative w-full max-w-[520px]">
+                    <CardHeader className="items-start">
+                        <CardTitle className="flex items-center justify-start gap-x-2">
                             <span>
                                 {TICKET_ICONS[ticket.status]}
                             </span>
