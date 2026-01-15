@@ -32,11 +32,11 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
                     "line-clamp-3": !isDetail
                 })}
                 >
-                    <span className="flex flex-col items-center gap-y-2 w-[240px] translate-x-30 justify-center">
-                        <span className="block w-[600px] translate-x-50">
+                    <span>
+                        <span className="flex flex-col items-center gap-y-2 w-[240px] translate-x-30 justify-center">
                             Updated at {ticket.updatedAt.toDateString()}
                         </span>
-                        <span className="mx-auto block w-[360px] translate-x-40 text-left">
+                        <span className="block w-[360px] translate-x-40 text-left">
                             {ticket.status}
                         </span>
                     </span>
