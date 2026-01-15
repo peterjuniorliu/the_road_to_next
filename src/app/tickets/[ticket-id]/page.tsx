@@ -2,7 +2,6 @@ import {Heading} from "../../../components/heading";
 import {Placeholder} from "../../../components/placeholder";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../components/ui/card";
 import {getTicket} from "../../../features/ticket/queries/get-ticket";
-import {TicketItem} from "../../../features/ticket/components/ticket-item";
 import {buildTicketNotFoundInfo} from "../../error-info";
 
 export const dynamic = "force-dynamic";

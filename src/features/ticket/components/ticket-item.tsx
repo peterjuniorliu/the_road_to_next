@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import {LucideArrowUpRightFromSquare} from "lucide-react";
+import {LucideArrowUpRightFromSquare, LucidePencil} from "lucide-react";
 import {Button} from "../../../components/ui/button";
 import Link from "next/link";
 import {CardContent} from "../../../components/ui/card"; 
-import {ticketPath} from "../../../app/paths";
+import {ticketPath, ticketEditPath} from "../../../app/paths";
 import {Ticket} from "../../../generated/prisma/client";
 
 type TicketItemProps = {
@@ -21,6 +21,14 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
         </Button>
     );
 
+    const editButton = (
+        <Button variant="outline" size="icon">
+            <Link prefetch href={ticketEditPath(ticket.id)}>
+                <LucidePencil className="h-4 w-4" />
+            </Link>
+        </Button>
+    );
+
     return (
         <div className={clsx("w-full", {
             "max-w-[500px]": isDetail,
@@ -32,19 +40,27 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
                     "line-clamp-3": !isDetail
                 })}
                 >
-                    <span>
-                        <span className="flex flex-col items-center gap-y-2 w-[240px] translate-x-30 justify-center">
-                            Updated at {ticket.updatedAt.toDateString()}
-                        </span>
-                        <span className="block w-[360px] translate-x-40 text-left">
-                            {ticket.status}
-                        </span>
+                    <span className="flex flex-col items-center gap-y-2 w-[240px] translate-x-30 justify-center">
+                        Updated at {ticket.updatedAt.toDateString()}
+                    </span>
+                    <span className="block w-[360px] translate-x-40 text-left">
+                        {ticket.status}
                     </span>
                 </span>
             </CardContent>
-            {isDetail ? null : (
-                <div className="absolute right-6 top-1/2 -translate-y-1/2">
-                    {detailButton}
+            {isDetail ? (
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
+                    <div>
+                        {editButton}
+                        {detailButton}
+                    </div>
+                </div>
+            ) : (
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
+                    <div>
+                        {detailButton}
+                        {editButton}
+                    </div>
                 </div>
             )}
         </div>
