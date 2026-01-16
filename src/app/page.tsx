@@ -4,14 +4,15 @@ import {Card, CardContent} from "../components/ui/card";
 import {TicketUpsertForm} from "../features/ticket/components/ticket-upsert-form";
 
 type HomePageProps = {
-    searchParams?: {
+    searchParams: Promise<{
         created?: string
-    };
+    }>;
 };
 
-const HomePage = ({searchParams}: HomePageProps) => 
+const HomePage = async ({searchParams}: HomePageProps) => 
 {
-    const isCreated = searchParams?.created === "1";
+    const resolvedSearchParams = await searchParams;
+    const isCreated = resolvedSearchParams?.created === "1";
 
     return (
         <div className="flex-1 flex flex-col gap-y-8">

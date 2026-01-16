@@ -30,7 +30,9 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                 <option value="DONE">Done</option>
             </select>
             <div className="flex items-center justify-between gap-x-3">
-                <Button type="submit">{ticket ? "Update" : "Create"}</Button>
+                <Button type="submit" className="w-full">
+                    {ticket ? "Update" : "Create"}
+                </Button>
                 {ticket ? (
                     <Button
                         type="submit"
