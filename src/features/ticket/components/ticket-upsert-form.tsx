@@ -1,7 +1,10 @@
+"use client";
 import {Ticket} from "../../../generated/prisma/client";
-import {Button} from "../../../components/ui/button";
 import {Input} from "../../../components/ui/input";
+import {useActionState} from "react";
+import {Button} from "../../../components/ui/button"; 
 import {Label} from "../../../components/ui/label";
+import {SubmitButton} from "../../../components/form/submit-button";
 import {Textarea} from "../../../components/ui/textarea";
 import {upsertTicket} from "../actions/upsert-ticket";
 import {deleteTicket} from "../actions/delete-ticket";
@@ -12,12 +15,17 @@ type TicketUpsertFormProps = {
 
 const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) => 
 {
+    const [actionState, action] = useActionState(
+        upsertTicket.bind(null, ticket?.id),
+        {message: ""} 
+    );
+
     return (
-        <form action={upsertTicket.bind(null, ticket?.id)} className="flex flex-col gap-y-2">
+        <form action={action} className="flex flex-col gap-y-2">
             <Label htmlFor="title">Title</Label>
             <Input id="title" name="title" type="text" defaultValue={ticket?.title ?? ""} />
             <Label htmlFor="content">Content</Label>
-            <Textarea id="content" name="content" defaultValue={ticket?.content ?? ""} />
+            <Textarea id="content" name="content" defaultValue={(actionState.payload?.get("content") as string) ?? ticket?.content} />
             <Label htmlFor="status">Status</Label>
             <select
                 id="status"
@@ -30,13 +38,12 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                 <option value="DONE">Done</option>
             </select>
             <div className="flex items-center justify-between gap-x-3">
-                <Button type="submit" className="w-full">
-                    {ticket ? "Update" : "Create"}
-                </Button>
-                {ticket ? (
+                <SubmitButton label={ticket ? "Edit": "Create"} />
+                {actionState.message}
+                {ticket?.id ? (
                     <Button
                         type="submit"
-                        formAction={deleteTicket.bind(null, ticket.id)}
+                        formAction={deleteTicket.bind(null, ticket?.id)}
                         className="bg-red-600 text-white hover:bg-red-700"
                     >
                         Delete

@@ -1,11 +1,22 @@
 "use server";
 import {revalidatePath} from "next/cache";
+import {z} from "zod";
 import {redirect} from "next/navigation";
+import {ActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state"; 
 import prisma from "../../../lib/prisma";
-import {homePath, ticketsPath} from "../../../app/paths";
+import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
 import {TicketStatus} from "../../../generated/prisma/client";
 
-export const upsertTicket = async (id: string | undefined, formData: FormData) => 
+const upsertTicketSchema = z.object({
+    title: z.string().min(1).max(191),
+    content: z.string().min(1).max(1024),
+    status: z.nativeEnum(TicketStatus).optional(),
+});
+
+export const upsertTicket = async (
+    id: string | undefined,
+    _actionState: ActionState,
+    formData: FormData) => 
 {
     const title = formData.get("title");
     const content = formData.get("content");
@@ -13,25 +24,40 @@ export const upsertTicket = async (id: string | undefined, formData: FormData) =
     const status = typeof rawStatus === "string" && rawStatus in TicketStatus
         ? (rawStatus as TicketStatus)
         : undefined;
-
-    const data = {
-        title: (typeof title === "string" ? title : "") as string,
-        content: (typeof content === "string" ? content : "") as string,
+   
+    const result = upsertTicketSchema.safeParse({
+        title: typeof title === "string" ? title : "",
+        content: typeof content === "string" ? content : "",
         ...(status ? {status} : {}),
-    };
-
-    await prisma.ticket.upsert({
-        where: {id: id ?? ""},
-        update: data,
-        create: data,
     });
+
+    if (!result.success) {
+        return {message: "Invalid ticket data"};
+    }
+
+    const data = result.data;
+
+    try {
+        if (id) {
+            await prisma.ticket.update({
+                where: {id},
+                data,
+            });
+        } else {
+            await prisma.ticket.create({
+                data,
+            });
+        }
+    } catch (error) {
+        return fromErrorToActionState(error, formData);
+    }
 
     revalidatePath(ticketsPath());
 
-    if (!id) {
-        revalidatePath(homePath());
-        redirect(`${homePath()}?created=1`);
+    if (id) {
+        redirect(ticketPath(id));
     }
 
-    redirect(ticketsPath());
+    revalidatePath(homePath());
+    redirect(`${homePath()}?created=1`);
 };
