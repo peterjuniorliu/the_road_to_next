@@ -12,7 +12,7 @@ const SubmitButton = ({label}: SubmitButtonProps) =>
     const {pending} = useFormStatus();
 
     return (
-        <Button disabled={pending} type="submit">
+        <Button disabled={pending} type="submit" className="w-full">
             {pending && <LucideLoaderCircle className="h-4 w-4 animate-spin" />}
             {label}
         </Button>
