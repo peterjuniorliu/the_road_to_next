@@ -1,7 +1,18 @@
 import {Heading} from "../components/heading";
+import {CardCompact} from "../components/card-compact";
+import {Card, CardContent} from "../components/ui/card";
+import {TicketUpsertForm} from "../features/ticket/components/ticket-upsert-form";
 
-const HomePage = () => 
+type HomePageProps = {
+    searchParams?: {
+        created?: string
+    };
+};
+
+const HomePage = ({searchParams}: HomePageProps) => 
 {
+    const isCreated = searchParams?.created === "1";
+
     return (
         <div className="flex-1 flex flex-col gap-y-8">
             <Heading title="Home" />
@@ -10,6 +21,19 @@ const HomePage = () =>
                     Your home place to start
                 </div>
             </div>
+            {isCreated ? (
+                <Card className="w-full max-w-[420px] self-center border-green-500/40 bg-green-50 text-green-900">
+                    <CardContent className="py-4 text-center text-sm font-semibold">
+                        Successfully created!
+                    </CardContent>
+                </Card>
+            ) : null}
+            <CardCompact
+            title="Create Ticket"
+            description="A new ticket will be created"
+            className="w-full max-w-[420px] self-center"
+            content={<TicketUpsertForm />}
+            />
         </div>
     );
 };
