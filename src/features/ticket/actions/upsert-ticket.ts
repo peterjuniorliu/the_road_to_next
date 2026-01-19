@@ -16,7 +16,8 @@ const upsertTicketSchema = z.object({
 export const upsertTicket = async (
     id: string | undefined,
     _actionState: ActionState,
-    formData: FormData) => 
+    formData: FormData
+): Promise<ActionState> => 
 {
     const title = formData.get("title");
     const content = formData.get("content");
@@ -32,7 +33,13 @@ export const upsertTicket = async (
     });
 
     if (!result.success) {
-        return {message: "Invalid ticket data"};
+        return {
+            status: "ERROR",
+            message: "Invalid ticket data",
+            payload: formData,
+            timestamp: Date.now(),
+            fieldErrors: result.error.flatten().fieldErrors
+        };
     }
 
     const data = result.data;
