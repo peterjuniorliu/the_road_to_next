@@ -13,6 +13,8 @@ model Ticket {
   createdAt DateTime     @default(now())
   title     String
   content   String       @db.VarChar(1024)
+  deadline  String       
+  bounty    Int
   status    TicketStatus @default(OPEN)
 }
 

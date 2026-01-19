@@ -11,6 +11,8 @@ import {TicketStatus} from "../../../generated/prisma/client";
 const upsertTicketSchema = z.object({
     title: z.string().min(1).max(191),
     content: z.string().min(1).max(1024),
+    deadline: z.string().min(1),
+    bounty: z.coerce.number().int().nonnegative(),
     status: z.nativeEnum(TicketStatus).optional(),
 });
 
@@ -22,6 +24,8 @@ export const upsertTicket = async (
 {
     const title = formData.get("title");
     const content = formData.get("content");
+    const deadline = formData.get("deadline");
+    const bounty = formData.get("bounty");
     const rawStatus = formData.get("status");
     const status = typeof rawStatus === "string" && rawStatus in TicketStatus
         ? (rawStatus as TicketStatus)
@@ -30,6 +34,8 @@ export const upsertTicket = async (
     const result = upsertTicketSchema.safeParse({
         title: typeof title === "string" ? title : "",
         content: typeof content === "string" ? content : "",
+        deadline: typeof deadline === "string" ? deadline : "",
+        bounty: typeof bounty === "string" ? bounty : "",
         ...(status ? {status} : {}),
     });
 

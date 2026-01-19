@@ -21,3 +21,12 @@ export const deleteCookieByKey = async (key: string) =>
 {
     (await cookies()).delete(key);
 };
+
+export const consumeCookieByKey = async (key: string) => 
+{
+    const message = await getCookieByKey(key);
+
+    await deleteCookieByKey(key);
+
+    return message;
+};

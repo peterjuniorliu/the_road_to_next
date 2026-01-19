@@ -31,6 +31,7 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
             <Label htmlFor="content">Content</Label>
             <Textarea id="content" name="content" defaultValue={(actionState.payload?.get("content") as string) ?? ticket?.content} />
             <Label htmlFor="status">Status</Label>
+            <FieldError actionState={actionState} name="content" />
             <select
                 id="status"
                 name="status"
@@ -41,6 +42,26 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                 <option value="IN_PROGRESS">In Progress</option>
                 <option value="DONE">Done</option>
             </select>
+            <div className="flex gap-x-2 mb-1">
+                <div className="w-1/2">
+                    <Label htmlFor="deadline">
+                        Deadline
+                    </Label>
+                    <Input id="deadline" name="deadline" type="date" defaultValue={
+                        (actionState.payload?.get("deadline") as string) ?? ticket?.deadline
+                    } />
+                    <FieldError actionState={actionState} name="deadline" />
+                </div>
+                <div className="w-1/2">
+                    <Label htmlFor="bounty">
+                        Bounty ($)
+                    </Label>
+                    <Input id="bounty" name="bounty" type="number" step=".01" defaultValue={
+                        (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+                    } />
+                    <FieldError actionState={actionState} name="bounty" />
+                </div>
+            </div>
             <div className="flex items-center justify-between gap-x-3">
                 <SubmitButton label={ticket ? "Edit": "Create"} />
                 {ticket?.id ? (

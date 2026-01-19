@@ -1,6 +1,5 @@
 import {Suspense} from "react";
 import {Heading} from "../../components/heading";
-import {RedirectToast} from "../../components/redirect-toast";
 import {Spinner} from "../../components/spinner";
 import {TicketList} from "../../features/ticket/components/ticket-list";
 
@@ -14,7 +13,6 @@ const TicketsPage = async () =>
             <Suspense fallback={<Spinner />}>
                 <TicketList />
             </Suspense>
-            <RedirectToast />
         </div>
     );
 };

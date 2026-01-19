@@ -1,7 +1,6 @@
 import {Heading} from "../../../components/heading";
 import {Placeholder} from "../../../components/placeholder";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../components/ui/card";
-import {RedirectToast} from "../../../components/redirect-toast";
 import {getTicket} from "../../../features/ticket/queries/get-ticket";
 import {buildTicketNotFoundInfo} from "../../error-info";
 
@@ -81,7 +80,6 @@ const TicketPage = async ({params}: TicketPageProps) =>
                     {ticket.status}
                 </p>
             </div>
-            <RedirectToast />
         </div>
     );
 };

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import {LucideArrowUpRightFromSquare, LucidePencil} from "lucide-react";
 import {Button} from "../../../components/ui/button";
 import Link from "next/link";
-import {CardContent} from "../../../components/ui/card"; 
+import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
 import {Ticket} from "../../../generated/prisma/client";
 
@@ -48,6 +48,14 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
                     </span>
                 </span>
             </CardContent>
+            <CardFooter className="flex justify-between">
+                <p className="text-sm text-muted-foreground">
+                    {ticket.deadline}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                    {ticket.bounty}
+                </p>
+            </CardFooter>
             {isDetail ? (
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
                     <div>
