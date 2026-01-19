@@ -4,6 +4,7 @@ import {z} from "zod";
 import {redirect} from "next/navigation";
 import {ActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state"; 
 import prisma from "../../../lib/prisma";
+import {setCookieByKey} from "../../../actions/cookies";
 import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
 import {TicketStatus} from "../../../generated/prisma/client";
 
@@ -62,6 +63,8 @@ export const upsertTicket = async (
     revalidatePath(ticketsPath());
 
     if (id) {
+        await setCookieByKey("toast", "Ticket updated");
+
         redirect(ticketPath(id));
     }
 

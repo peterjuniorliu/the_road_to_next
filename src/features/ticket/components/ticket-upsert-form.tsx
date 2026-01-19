@@ -6,8 +6,7 @@ import {useActionState} from "react";
 import {Button} from "../../../components/ui/button"; 
 import {Label} from "../../../components/ui/label";
 import {ActionState, EMPTY_ACTION_STATE} from "../../../components/form/utils/to-action-state";
-import {toast} from "sonner";
-import {useActionFeedback} from "../../../components/form/hooks/use-action-feedback";
+import {Form} from "../../../components/form/form";
 import {SubmitButton} from "../../../components/form/submit-button";
 import {Textarea} from "../../../components/ui/textarea";
 import {upsertTicket} from "../actions/upsert-ticket";
@@ -24,21 +23,8 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
         EMPTY_ACTION_STATE
     );
 
-    useActionFeedback(actionState, {
-        onSuccess: ({actionState}) => {
-            if (actionState.message) {
-                toast.success(actionState.message);
-            }
-        },
-        onError: ({actionState}) => {
-            if (actionState.message) {
-                toast.error(actionState.message);
-            }
-        }
-    });
-
     return (
-        <form action={action} className="flex flex-col gap-y-2">
+        <Form action={action} actionState={actionState}>
             <Label htmlFor="title">Title</Label>
             <Input id="title" name="title" type="text" defaultValue={(actionState.payload?.get("title") as string) ?? ticket?.title} />
             <FieldError actionState={actionState} name="title" />
@@ -67,7 +53,7 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                     </Button>
                 ) : null}
             </div>
-        </form>
+        </Form>
     );
 };
 
