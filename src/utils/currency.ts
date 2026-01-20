@@ -1,19 +1,22 @@
+import {Prisma} from "../generated/prisma/client";
 import {MyBig} from "../lib/big";
 
-export const toCent = (amount: number) =>
-{
-    return new MyBig(amount).mul(100).round(2).toNumber();
-}
+type MoneyInput = number | string | Prisma.Decimal;
 
-export const fromCent = (amount: number) =>
+const toMoneyString = (amount: MoneyInput) =>
 {
-    return new MyBig(amount).div(100).round(2).toNumber();
-}
+    return typeof amount === "string" ? amount : amount.toString();
+};
 
-export const toCurrencyFromCent = (amount: number) =>
+export const toDecimalString = (amount: MoneyInput) =>
+{
+    return new MyBig(toMoneyString(amount)).toFixed(2);
+};
+
+export const toCurrency = (amount: MoneyInput) =>
 {
     return new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD"
-    }).format(fromCent(amount));
-}
+    }).format(Number(toDecimalString(amount)));
+};

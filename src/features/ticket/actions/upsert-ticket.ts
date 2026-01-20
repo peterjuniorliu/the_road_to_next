@@ -7,7 +7,7 @@ import prisma from "../../../lib/prisma";
 import {setCookieByKey} from "../../../actions/cookies";
 import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
 import {TicketStatus} from "../../../generated/prisma/client";
-import {toCent} from "../../../utils/currency";
+import {toDecimalString} from "../../../utils/currency";
 
 const upsertTicketSchema = z.object({
     title: z.string().min(1).max(191),
@@ -52,7 +52,7 @@ export const upsertTicket = async (
     const data = result.data;
     const dbData = {
         ...data,
-        bounty: toCent(data.bounty),
+        bounty: toDecimalString(data.bounty),
     };
 
     try {

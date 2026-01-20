@@ -1,7 +1,7 @@
 "use client";
 import {Ticket} from "../../../generated/prisma/client";
 import {DatePicker} from "../../../components/date-picker";
-import {fromCent} from "../../../utils/currency";
+import {toDecimalString} from "../../../utils/currency";
 import {Input} from "../../../components/ui/input";
 import {FieldError} from "../../../components/form/field-error";
 import {useActionState} from "react";
@@ -59,7 +59,7 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                         Bounty ($)
                     </Label>
                     <Input id="bounty" name="bounty" type="number" step=".01" defaultValue={
-                        (actionState.payload?.get("bounty") as string) ?? (ticket?.bounty ? fromCent(ticket?.bounty) : "")
+                        (actionState.payload?.get("bounty") as string) ?? (ticket?.bounty ? toDecimalString(ticket?.bounty) : "")
                     } />
                     <FieldError actionState={actionState} name="bounty" />
                 </div>
