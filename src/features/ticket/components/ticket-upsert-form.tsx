@@ -1,10 +1,10 @@
 "use client";
 import {Ticket} from "../../../generated/prisma/client";
-import {DatePicker} from "../../../components/date-picker";
+import {DatePicker, ImperativeHandleFromDatePicker} from "../../../components/date-picker";
 import {toDecimalString} from "../../../utils/currency";
 import {Input} from "../../../components/ui/input";
 import {FieldError} from "../../../components/form/field-error";
-import {useActionState} from "react";
+import {useActionState, useRef} from "react";
 import {Button} from "../../../components/ui/button"; 
 import {Label} from "../../../components/ui/label";
 import {ActionState, EMPTY_ACTION_STATE} from "../../../components/form/utils/to-action-state";
@@ -25,8 +25,15 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
         EMPTY_ACTION_STATE
     );
 
+    const datePickerImperativeHandleRef = useRef<ImperativeHandleFromDatePicker>(null);
+
+    const handleSuccess = () => 
+    {
+        datePickerImperativeHandleRef.current?.reset();
+    }
+
     return (
-        <Form action={action} actionState={actionState}>
+        <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
             <Label htmlFor="title">Title</Label>
             <Input id="title" name="title" type="text" defaultValue={(actionState.payload?.get("title") as string) ?? ticket?.title} />
             <FieldError actionState={actionState} name="title" />
@@ -51,7 +58,9 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                     </Label>
                     <DatePicker id="deadline" name="deadline" defaultValue={
                         (actionState.payload?.get("deadline") as string) ?? ticket?.deadline
-                    } />
+                    } 
+                        imperativeHandleRef={datePickerImperativeHandleRef}
+                    />
                     <FieldError actionState={actionState} name="deadline" />
                 </div>
                 <div className="w-1/2">
