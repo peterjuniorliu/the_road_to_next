@@ -1,5 +1,6 @@
 "use client";
 import {Ticket} from "../../../generated/prisma/client";
+import {fromCent} from "../../../utils/currency";
 import {Input} from "../../../components/ui/input";
 import {FieldError} from "../../../components/form/field-error";
 import {useActionState} from "react";
@@ -57,7 +58,7 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                         Bounty ($)
                     </Label>
                     <Input id="bounty" name="bounty" type="number" step=".01" defaultValue={
-                        (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+                        (actionState.payload?.get("bounty") as string) ?? (ticket?.bounty ? fromCent(ticket?.bounty) : "")
                     } />
                     <FieldError actionState={actionState} name="bounty" />
                 </div>

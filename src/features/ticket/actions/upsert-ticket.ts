@@ -2,11 +2,12 @@
 import {revalidatePath} from "next/cache";
 import {z} from "zod";
 import {redirect} from "next/navigation";
-import {ActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state"; 
+import {ActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state";
 import prisma from "../../../lib/prisma";
 import {setCookieByKey} from "../../../actions/cookies";
 import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
 import {TicketStatus} from "../../../generated/prisma/client";
+import {toCent} from "../../../utils/currency";
 
 const upsertTicketSchema = z.object({
     title: z.string().min(1).max(191),
@@ -20,8 +21,7 @@ export const upsertTicket = async (
     id: string | undefined,
     _actionState: ActionState,
     formData: FormData
-): Promise<ActionState> => 
-{
+): Promise<ActionState> => {
     const title = formData.get("title");
     const content = formData.get("content");
     const deadline = formData.get("deadline");
@@ -30,7 +30,7 @@ export const upsertTicket = async (
     const status = typeof rawStatus === "string" && rawStatus in TicketStatus
         ? (rawStatus as TicketStatus)
         : undefined;
-   
+
     const result = upsertTicketSchema.safeParse({
         title: typeof title === "string" ? title : "",
         content: typeof content === "string" ? content : "",
@@ -45,21 +45,25 @@ export const upsertTicket = async (
             message: "Invalid ticket data",
             payload: formData,
             timestamp: Date.now(),
-            fieldErrors: result.error.flatten().fieldErrors
+            fieldErrors: result.error.flatten().fieldErrors,
         };
     }
 
     const data = result.data;
+    const dbData = {
+        ...data,
+        bounty: toCent(data.bounty),
+    };
 
     try {
         if (id) {
             await prisma.ticket.update({
                 where: {id},
-                data,
+                data: dbData,
             });
         } else {
             await prisma.ticket.create({
-                data,
+                data: dbData,
             });
         }
     } catch (error) {

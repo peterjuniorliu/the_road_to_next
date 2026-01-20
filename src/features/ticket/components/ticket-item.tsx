@@ -2,6 +2,7 @@ import clsx from "clsx";
 import {LucideArrowUpRightFromSquare, LucidePencil} from "lucide-react";
 import {Button} from "../../../components/ui/button";
 import Link from "next/link";
+import {toCurrencyFromCent} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
 import {Ticket} from "../../../generated/prisma/client";
@@ -53,7 +54,7 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
                     {ticket.deadline}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                    {ticket.bounty}
+                    {toCurrencyFromCent(ticket.bounty)}
                 </p>
             </CardFooter>
             {isDetail ? (
