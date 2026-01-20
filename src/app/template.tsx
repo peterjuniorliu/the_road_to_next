@@ -9,9 +9,9 @@ export default function RootTemplate({
 }: RootTemplateProps) 
 {
     return (
-        <html>
-            <body>{children}</body>
+        <>
+            {children}
             <RedirectToast />
-        </html>
+        </>
     );
 }
