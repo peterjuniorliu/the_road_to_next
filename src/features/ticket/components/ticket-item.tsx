@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import {LucideArrowUpRightFromSquare, LucideMoreVertical, LucidePencil} from "lucide-react";
 import {Button} from "../../../components/ui/button";
-import {DropdownMenuItem} from "../../../components/ui/dropdown-menu";
 import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 

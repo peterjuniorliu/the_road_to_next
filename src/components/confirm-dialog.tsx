@@ -11,8 +11,7 @@ import {
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger
+    AlertDialogTitle
 } from "./ui/alert-dialog";
 import {Form} from "../components/form/form";
 
