@@ -1,18 +1,19 @@
 "use client";
 import {Ticket, TicketStatus} from "../../../generated/prisma/client";
-import {toast} from "sonner";
-import {deleteTicket} from "../actions/delete-ticket";
+import {useConfirmDialog} from "../../../components/confirm-dialog";
 import {LucideTrash} from "lucide-react";
+import {toast} from "sonner";
 import {TICKET_STATUS_LABELS} from "../constants";
+import {Button} from "../../../components/ui/button";
 import {DropdownMenu, 
         DropdownMenuContent, 
-        DropdownMenuItem, 
         DropdownMenuRadioGroup,
+        DropdownMenuItem,
         DropdownMenuRadioItem,
         DropdownMenuSeparator,
         DropdownMenuTrigger} from "../../../components/ui/dropdown-menu";
 import {updateTicketStatus} from "../actions/update-ticket-status";
-import {Button} from "../../../components/ui/button";
+import {deleteTicket} from "../actions/delete-ticket";
 
 type TicketMoreMenuProps = {
     ticket: Ticket,
@@ -21,9 +22,9 @@ type TicketMoreMenuProps = {
 
 const TicketMoreMenu = ({ticket, trigger}: TicketMoreMenuProps) => 
 {
-    const deleteButton = (
-        <DropdownMenuItem className="p-0" onSelect={(event) => event.preventDefault()}>
-            <form action={deleteTicket.bind(null, ticket.id)} className="w-full">
+    const [deleteButton, deleteDialog] = (
+        useConfirmDialog({action: deleteTicket.bind(null, ticket.id), trigger: (
+            <DropdownMenuItem className="p-0" onSelect={(event) => event.preventDefault()}>
                 <Button
                     type="submit"
                     variant="ghost"
@@ -32,8 +33,8 @@ const TicketMoreMenu = ({ticket, trigger}: TicketMoreMenuProps) =>
                     <LucideTrash className="h-4 w-4" />
                     Delete
                 </Button>
-            </form>
-        </DropdownMenuItem>
+            </DropdownMenuItem>
+        ),})
     );
 
     const handleUpdateTicketStatus = async (value: string) => 
@@ -61,20 +62,23 @@ const TicketMoreMenu = ({ticket, trigger}: TicketMoreMenuProps) =>
                 </DropdownMenuRadioItem>
             ))}
         </DropdownMenuRadioGroup>
-    )
+    );
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                {trigger}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" side="right">
-                {ticketStatusRadioGroupItem}
-                <DropdownMenuSeparator />
-                {deleteButton}
-            </DropdownMenuContent>
-        </DropdownMenu>
-    )
-}
+        <div>
+            {deleteDialog}
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    {trigger}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" side="right">
+                    {ticketStatusRadioGroupItem}
+                    <DropdownMenuSeparator />
+                    {deleteButton}
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
+    );
+};
 
 export {TicketMoreMenu};

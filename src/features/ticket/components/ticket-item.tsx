@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import {LucideArrowUpRightFromSquare, LucideMoreVertical, LucidePencil} from "lucide-react";
 import {Button} from "../../../components/ui/button";
+import {DropdownMenuItem} from "../../../components/ui/dropdown-menu";
 import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
@@ -68,19 +69,13 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
             </CardFooter>
             {isDetail ? (
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
-                    <div>
-                        {editButton}
-                        {detailButton}
-                        {moreMenu}
-                    </div>
+                    {editButton}
+                    {moreMenu}
                 </div>
             ) : (
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
-                    <div>
-                        {detailButton}
-                        {editButton}
-                        {moreMenu}
-                    </div>
+                    {detailButton}
+                    {editButton}
                 </div>
             )}
         </div>
