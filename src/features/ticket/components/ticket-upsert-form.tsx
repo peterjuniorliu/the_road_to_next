@@ -1,7 +1,6 @@
 "use client";
 import {Ticket} from "../../../generated/prisma/client";
 import {DatePicker, ImperativeHandleFromDatePicker} from "../../../components/date-picker";
-import {toDecimalString} from "../../../utils/currency";
 import {Input} from "../../../components/ui/input";
 import {FieldError} from "../../../components/form/field-error";
 import {useActionState, useRef} from "react";
@@ -14,8 +13,17 @@ import {Textarea} from "../../../components/ui/textarea";
 import {upsertTicket} from "../actions/upsert-ticket";
 import {deleteTicket} from "../actions/delete-ticket";
 
+type TicketUpsertFormTicket = {
+    id: string;
+    title: string;
+    content: string | null;
+    status: Ticket["status"];
+    deadline: string | null;
+    bounty: string | null;
+};
+
 type TicketUpsertFormProps = {
-    ticket?: Ticket;
+    ticket?: TicketUpsertFormTicket;
 };
 
 const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) => 
@@ -57,7 +65,7 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                         Deadline
                     </Label>
                     <DatePicker id="deadline" name="deadline" defaultValue={
-                        (actionState.payload?.get("deadline") as string) ?? ticket?.deadline
+                        (actionState.payload?.get("deadline") as string) ?? ticket?.deadline ?? undefined
                     } 
                         imperativeHandleRef={datePickerImperativeHandleRef}
                     />
@@ -68,22 +76,13 @@ const TicketUpsertForm = ({ticket}: TicketUpsertFormProps) =>
                         Bounty ($)
                     </Label>
                     <Input id="bounty" name="bounty" type="number" step=".01" defaultValue={
-                        (actionState.payload?.get("bounty") as string) ?? (ticket?.bounty ? toDecimalString(ticket?.bounty) : "")
+                        (actionState.payload?.get("bounty") as string) ?? (ticket?.bounty ?? "")
                     } />
                     <FieldError actionState={actionState} name="bounty" />
                 </div>
             </div>
-            <div className="flex items-center justify-between gap-x-3">
+            <div className="flex items-center justify-between">
                 <SubmitButton label={ticket ? "Edit": "Create"} />
-                {ticket?.id ? (
-                    <Button
-                        type="submit"
-                        formAction={deleteTicket.bind(null, ticket?.id)}
-                        className="bg-red-600 text-white hover:bg-red-700"
-                    >
-                        Delete
-                    </Button>
-                ) : null}
             </div>
         </Form>
     );

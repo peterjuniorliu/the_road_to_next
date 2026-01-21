@@ -18,9 +18,18 @@ const TicketEditPage = async ({params}: TicketEditPageProps) =>
         notFound();
     }
 
+    const ticketForForm = ticket ? {
+        id: ticket.id,
+        title: ticket.title,
+        content: ticket.content,
+        status: ticket.status,
+        deadline: ticket.deadline ?? null,
+        bounty: ticket.bounty ? ticket.bounty.toString() : null,
+    } : undefined;
+
     return (
         <div className="flex-1 flex flex-col justify-center items-center">
-            <CardCompact title="Edit Ticket" description="Edit an existing ticket" className="w-full max-w-[420px] animate-fade-form-top" content={<TicketUpsertForm ticket={ticket} />}
+            <CardCompact title="Edit Ticket" description="Edit an existing ticket" className="w-full max-w-[420px] animate-fade-form-top" content={<TicketUpsertForm ticket={ticketForForm} />}
             />
         </div>
     );
