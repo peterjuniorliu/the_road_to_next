@@ -1,7 +1,7 @@
-import {Heading} from "../components/heading";
-import {CardCompact} from "../components/card-compact";
-import {Card, CardContent} from "../components/ui/card";
-import {TicketUpsertForm} from "../features/ticket/components/ticket-upsert-form";
+import {Heading} from "../../../components/heading";
+import {CardCompact} from "../../../components/card-compact";
+import {Card, CardContent} from "../../../components/ui/card";
+import {TicketUpsertForm} from "../../../features/ticket/components/ticket-upsert-form";
 
 type HomePageProps = {
     searchParams: Promise<{

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { LucideKeyRound, LucideMail } from "lucide-react";
-import { buttonVariants } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { signInPath } from "../paths";
+import { buttonVariants } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import { signInPath } from "../../paths";
 
 const PasswordForgotPage = () => {
   return (
