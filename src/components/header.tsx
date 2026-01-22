@@ -8,7 +8,7 @@ import {homePath, signInPath, signUpPath, ticketsPath} from "../app/paths";
  
 const Header = () => 
 {
-    const pathname = usePathname();
+    const pathname = usePathname() ?? "";
     const searchParams = useSearchParams();
     const onTicketsPage = pathname === "/tickets";
     const onTicketDetail = pathname.startsWith("/tickets/");
