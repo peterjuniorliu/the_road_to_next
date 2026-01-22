@@ -1,17 +1,32 @@
 "use client";
 import {buttonVariants} from "../components/ui/button";
-import {usePathname} from "next/navigation";
+import {usePathname, useSearchParams} from "next/navigation";
 import {LucideKanban} from "lucide-react";
 import Link from "next/link";
 import {ThemeSwitcher} from "../components/theme/theme-switcher";
-import {homePath, ticketsPath} from "../app/paths";
+import {homePath, signInPath, signUpPath, ticketsPath} from "../app/paths";
  
 const Header = () => 
 {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const onTicketsPage = pathname === "/tickets";
     const onTicketDetail = pathname.startsWith("/tickets/");
-    const action = onTicketDetail ? {href: ticketsPath(), label: "Back to Tickets"} : onTicketsPage ? {href: homePath(), label: "Back to Home"} : {href: ticketsPath(), label: "Go to Tickets"};
+    const authMode = searchParams.get("mode");
+    const onLegacySignUp = pathname === "/sign-up";
+    const onLegacySignIn = pathname === "/sign-in";
+    const onAuthPage = pathname === "/auth" || onLegacySignUp || onLegacySignIn;
+    const onSignUp = onLegacySignUp || (onAuthPage && authMode !== "signin");
+    const onSignIn = onLegacySignIn || (onAuthPage && authMode === "signin");
+    const action = onSignUp
+      ? {href: signInPath(), label: "Sign in"}
+      : onSignIn
+        ? {href: signUpPath(), label: "Sign up"}
+        : onTicketDetail
+          ? {href: ticketsPath(), label: "Back to Tickets"}
+          : onTicketsPage
+            ? {href: homePath(), label: "Back to Home"}
+            : {href: ticketsPath(), label: "Go to Tickets"};
 
     return (
         <nav className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur w-full flex py-2.5 px-5 justify-between"

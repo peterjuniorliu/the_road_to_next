@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
 , "prisma/schema.prisma"  ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "prisma.config.ts"]
 }
