@@ -1,8 +1,7 @@
-import { redirect } from "next/navigation";
-import { signInPath } from "../../paths";
+import { AuthShell } from "../_components/auth-shell";
 
 const SignInPage = () => {
-  redirect(signInPath());
+  return <AuthShell mode="signin" />;
 };
 
 export default SignInPage;

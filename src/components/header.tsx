@@ -1,6 +1,6 @@
 "use client";
 import {buttonVariants} from "../components/ui/button";
-import {usePathname, useSearchParams} from "next/navigation";
+import {usePathname} from "next/navigation";
 import {LucideKanban} from "lucide-react";
 import Link from "next/link";
 import {ThemeSwitcher} from "../components/theme/theme-switcher";
@@ -9,15 +9,14 @@ import {homePath, signInPath, signUpPath, ticketsPath} from "../app/paths";
 const Header = () => 
 {
     const pathname = usePathname() ?? "";
-    const searchParams = useSearchParams();
-    const onTicketsPage = pathname === "/tickets";
-    const onTicketDetail = pathname.startsWith("/tickets/");
-    const authMode = searchParams.get("mode");
-    const onLegacySignUp = pathname === "/sign-up";
-    const onLegacySignIn = pathname === "/sign-in";
-    const onAuthPage = pathname === "/auth" || onLegacySignUp || onLegacySignIn;
-    const onSignUp = onLegacySignUp || (onAuthPage && authMode !== "signin");
-    const onSignIn = onLegacySignIn || (onAuthPage && authMode === "signin");
+    const ticketsBase = ticketsPath();
+    const onTicketsPage = pathname === ticketsBase;
+    const onTicketDetail = pathname.startsWith(`${ticketsBase}/`);
+    const onAuthSignUp = pathname === signUpPath();
+    const onAuthSignIn = pathname === signInPath();
+    const onAuthPage = pathname.startsWith("/auth") && !pathname.startsWith("/auth/home");
+    const onSignUp = onAuthSignUp || (onAuthPage && !onAuthSignIn);
+    const onSignIn = onAuthSignIn;
     const action = onSignUp
       ? {href: signInPath(), label: "Sign in"}
       : onSignIn

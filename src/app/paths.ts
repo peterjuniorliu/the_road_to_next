@@ -1,7 +1,7 @@
-export const homePath = () => "/";
+export const homePath = () => "/auth/home";
 export const signUpPath = () => "/auth/sign-up";
 export const signInPath = () => "/auth/sign-in";
-export const passwordForgotPath = () => "/password-forgot";
-export const ticketsPath = () => "/tickets";
-export const ticketPath = (ticketId: string) => `/tickets/${ticketId}`;
-export const ticketEditPath = (ticketId: string) => `/tickets/${ticketId}/edit`;
+export const passwordForgotPath = () => "/auth/password-forgot";
+export const ticketsPath = () => "/auth/home/tickets";
+export const ticketPath = (ticketId: string) => `/auth/home/tickets/${ticketId}`;
+export const ticketEditPath = (ticketId: string) => `/auth/home/tickets/${ticketId}/edit`;
