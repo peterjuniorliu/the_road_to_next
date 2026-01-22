@@ -1,5 +1,6 @@
 import "./globals.css";
 import {Header} from "../components/header";
+import {Suspense} from "react";
 import localFont from "next/font/local";
 import {Toaster} from "../../components/ui/sonner";
 import {ThemeProvider} from "../components/theme/theme-provider";
@@ -31,7 +32,9 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
-          <Header />
+          <Suspense fallback={null}>
+            <Header />
+          </Suspense>
           <main
             className="
               min-h-screen flex-1
