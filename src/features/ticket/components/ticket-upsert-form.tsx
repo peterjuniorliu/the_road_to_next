@@ -1,5 +1,5 @@
 "use client";
-import {Ticket} from "../../../generated/prisma/client";
+import {Ticket} from "../../../generated/prisma";
 import {DatePicker, ImperativeHandleFromDatePicker} from "../../../components/date-picker";
 import {Input} from "../../../components/ui/input";
 import {FieldError} from "../../../components/form/field-error";

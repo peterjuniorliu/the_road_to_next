@@ -5,7 +5,7 @@ import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
-import {Ticket} from "../../../generated/prisma/client";
+import {Ticket} from "../../../generated/prisma";
 import {TicketMoreMenu} from "./ticket-more-menu";
 
 type TicketItemProps = {

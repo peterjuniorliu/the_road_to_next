@@ -1,4 +1,4 @@
-import {Prisma} from "../generated/prisma/client";
+import {Prisma} from "../generated/prisma";
 import {MyBig} from "../lib/big";
 
 type MoneyInput = number | string | Prisma.Decimal;

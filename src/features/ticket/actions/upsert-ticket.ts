@@ -6,7 +6,7 @@ import {ActionState, fromErrorToActionState} from "../../../components/form/util
 import prisma from "../../../lib/prisma";
 import {setCookieByKey} from "../../../actions/cookies";
 import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
-import {TicketStatus} from "../../../generated/prisma/client";
+import {TicketStatus} from "../../../generated/prisma";
 import {toDecimalString} from "../../../utils/currency";
 
 const upsertTicketSchema = z.object({

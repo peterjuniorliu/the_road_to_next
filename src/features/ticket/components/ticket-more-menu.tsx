@@ -1,5 +1,5 @@
 "use client";
-import {Ticket, TicketStatus} from "../../../generated/prisma/client";
+import {Ticket, TicketStatus} from "../../../generated/prisma";
 import {useConfirmDialog} from "../../../components/confirm-dialog";
 import {LucideTrash} from "lucide-react";
 import {toast} from "sonner";

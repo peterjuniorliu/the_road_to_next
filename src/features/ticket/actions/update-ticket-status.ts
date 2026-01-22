@@ -1,5 +1,5 @@
 "use server";
-import {TicketStatus} from "../../../generated/prisma/client";
+import {TicketStatus} from "../../../generated/prisma";
 import {revalidatePath} from "next/cache";
 import {fromErrorToActionState, toActionState} from "../../../components/form/utils/to-action-state";
 import prisma from "../../../lib/prisma";
