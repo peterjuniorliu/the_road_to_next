@@ -12,6 +12,30 @@ const SignUpForm = () => {
 
   return (
     <Form action={action} actionState={actionState}>
+      <input
+        type="text"
+        name="fake-username"
+        autoComplete="username"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute -left-[10000px] top-auto h-0 w-0 overflow-hidden"
+      />
+      <input
+        type="email"
+        name="fake-email"
+        autoComplete="email"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute -left-[10000px] top-auto h-0 w-0 overflow-hidden"
+      />
+      <input
+        type="password"
+        name="fake-password"
+        autoComplete="new-password"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute -left-[10000px] top-auto h-0 w-0 overflow-hidden"
+      />
       <Input
         name="username"
         placeholder="Username"
