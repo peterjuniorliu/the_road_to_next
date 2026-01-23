@@ -22,6 +22,10 @@ const signUpSchema = z
       .refine(
         (value) => !value.includes(" "),
         "Username cannot contain spaces"
+      )
+      .refine(
+        (value) => !value.includes("@"),
+        "Username cannot contain @"
       ),
     email: z.string().min(1, { message: "Is required" }).max(191).email(),
     password: z.string().min(6).max(191),
