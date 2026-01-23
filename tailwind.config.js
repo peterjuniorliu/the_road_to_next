@@ -9,6 +9,10 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        animation: {
+          "fade-from-top": "fade-from-top 0.5s ease-out",
+          "header-from-top": "header-from-top 0.5s ease-out",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -26,6 +30,10 @@ module.exports = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
+        },
+        "header-from-top": {
+          from: { transform: "translateY(-100%)" },
+          to: { transform: "translateY(0)" },
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
