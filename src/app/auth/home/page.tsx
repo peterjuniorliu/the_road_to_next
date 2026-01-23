@@ -6,7 +6,7 @@ import {SubmitButton} from "../../../components/form/submit-button";
 import {Card, CardContent} from "../../../components/ui/card";
 import {TicketUpsertForm} from "../../../features/ticket/components/ticket-upsert-form";
 import {getAuth} from "../../../features/auth/queries/get-auth";
-import {HomeClient} from "../../../features/auth/components/home-client";
+import {HomeClient} from "../../../features/auth/hooks/home-client";
 
 type HomePageProps = {
     searchParams: Promise<{
