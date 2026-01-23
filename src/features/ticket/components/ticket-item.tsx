@@ -5,13 +5,11 @@ import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
-import {Prisma} from "../../../generated/prisma";
 import {TicketMoreMenu} from "./ticket-more-menu";
+import type {TicketWithMetadata} from "../types";
 
 type TicketItemProps = {
-    ticket: Prisma.TicketGetPayload<{
-        include: {user: true}
-    }>,
+    ticket: TicketWithMetadata,
     isDetail?: boolean 
 };
 
