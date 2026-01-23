@@ -6,5 +6,12 @@ export const getTicket = async (id: string) =>
         where: {
             id,
         },
+        include: {
+            user: {
+                select: {
+                    username: true,
+                }
+            }
+        }
     });
 };

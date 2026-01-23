@@ -15,6 +15,7 @@ model User {
   email        String    @unique
   passwordHash String
   sessions     Session[]
+  tickets      Ticket[]
 }
 
 model Session {
@@ -35,6 +36,9 @@ model Ticket {
   deadline  String       
   bounty    Decimal      @db.Decimal(10, 2)
   status    TicketStatus @default(OPEN)
+  user      User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  @@index([userId])
 }
 
 enum TicketStatus {

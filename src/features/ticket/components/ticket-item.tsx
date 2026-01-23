@@ -5,11 +5,13 @@ import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
-import {Ticket} from "../../../generated/prisma";
+import {Prisma} from "../../../generated/prisma";
 import {TicketMoreMenu} from "./ticket-more-menu";
 
 type TicketItemProps = {
-    ticket: Ticket,
+    ticket: Prisma.TicketGetPayload<{
+        include: {user: true}
+    }>,
     isDetail?: boolean 
 };
 
@@ -60,7 +62,7 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <p className="text-sm text-muted-foreground">
-                    {ticket.deadline}
+                    {ticket.deadline} by {ticket.user?.username ?? "Unknown"}
                 </p>
                 <p className="text-sm text-muted-foreground">
                     {toCurrency(ticket.bounty)}

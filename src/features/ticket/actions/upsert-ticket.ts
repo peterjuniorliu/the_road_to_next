@@ -4,8 +4,9 @@ import {z} from "zod";
 import {redirect} from "next/navigation";
 import {ActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state";
 import prisma from "../../../lib/prisma";
+import {getAuth} from "../../auth/queries/get-auth";
 import {setCookieByKey} from "../../../actions/cookies";
-import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
+import {signInPath, homePath, ticketPath, ticketsPath} from "../../../app/paths";
 import {TicketStatus} from "../../../generated/prisma";
 import {toDecimalString} from "../../../utils/currency";
 
@@ -31,6 +32,8 @@ export const upsertTicket = async (
         ? (rawStatus as TicketStatus)
         : undefined;
 
+    const {user} = await getAuth();
+
     const result = upsertTicketSchema.safeParse({
         title: typeof title === "string" ? title : "",
         content: typeof content === "string" ? content : "",
@@ -38,6 +41,10 @@ export const upsertTicket = async (
         bounty: typeof bounty === "string" ? bounty : "",
         ...(status ? {status} : {}),
     });
+
+    if (!user) {
+        redirect(signInPath());
+    }
 
     if (!result.success) {
         return {
@@ -52,6 +59,7 @@ export const upsertTicket = async (
     const data = result.data;
     const dbData = {
         ...data,
+        userId: user.id,
         bounty: toDecimalString(data.bounty),
     };
 
