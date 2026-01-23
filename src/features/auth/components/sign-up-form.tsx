@@ -16,6 +16,7 @@ const SignUpForm = () => {
         name="username"
         placeholder="Username"
         autoComplete="username"
+        autoCapitalize="none"
         defaultValue={actionState.payload?.get("username") as string}
       />
       <FieldError actionState={actionState} name="username" />

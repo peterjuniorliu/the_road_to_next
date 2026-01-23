@@ -30,7 +30,7 @@ const Form = ({action, actionState, children, onSuccess, onError}: FormProps) =>
     });
 
     return (
-        <form action={action} className="flex flex-col gap-y-2">
+        <form action={action} className="flex flex-col gap-y-2" autoComplete="off">
             {children}
         </form>
     );
