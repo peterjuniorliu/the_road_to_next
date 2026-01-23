@@ -12,16 +12,36 @@ const SignUpForm = () => {
 
   return (
     <Form action={action} actionState={actionState}>
-      <Input name="username" placeholder="Username" defaultValue={actionState.payload?.get("username") as string} />
+      <Input
+        name="username"
+        placeholder="Username"
+        autoComplete="username"
+        defaultValue={actionState.payload?.get("username") as string}
+      />
       <FieldError actionState={actionState} name="username" />
-      <Input name="email" placeholder="Email" defaultValue={actionState.payload?.get("email") as string} />
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        autoComplete="email"
+        inputMode="email"
+        defaultValue={actionState.payload?.get("email") as string}
+      />
       <FieldError actionState={actionState} name="email" />
-      <Input type="password" name="password" placeholder="Password" defaultValue={actionState.payload?.get("password") as string} />
+      <Input
+        type="password"
+        name="password"
+        placeholder="Password"
+        autoComplete="new-password"
+        defaultValue={actionState.payload?.get("password") as string}
+      />
       <FieldError actionState={actionState} name="password" />
       <Input
         type="password"
         name="confirmPassword"
-        placeholder="Confirm Password" defaultValue={actionState.payload?.get("confirmPassword") as string}
+        placeholder="Confirm Password"
+        autoComplete="new-password"
+        defaultValue={actionState.payload?.get("confirmPassword") as string}
       />
       <FieldError actionState={actionState} name="confirmPassword" />
       <SubmitButton label="Sign Up" />

@@ -12,9 +12,22 @@ const SignInForm = () => {
 
   return (
     <Form action={action} actionState={actionState}>
-      <Input name="email" placeholder="Email" defaultValue={actionState.payload?.get("email") as string} />
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        autoComplete="email"
+        inputMode="email"
+        defaultValue={actionState.payload?.get("email") as string}
+      />
       <FieldError actionState={actionState} name="email" />
-      <Input type="password" name="password" placeholder="Password" defaultValue={actionState.payload?.get("password") as string} />
+      <Input
+        type="password"
+        name="password"
+        placeholder="Password"
+        autoComplete="current-password"
+        defaultValue={actionState.payload?.get("password") as string}
+      />
       <FieldError actionState={actionState} name="password" />
       <SubmitButton label="Sign In" />
     </Form>
