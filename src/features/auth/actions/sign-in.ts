@@ -10,7 +10,7 @@ import {
 } from "../../../components/form/utils/to-action-state";
 import { lucia } from "../../../lib/lucia";
 import prisma from "../../../lib/prisma";
-import { ticketsPath } from "../../../app/paths";
+import { homePath } from "../../../app/paths";
 
 const signInSchema = z.object({
   email: z.string().min(1, { message: "Is required" }).max(191).email(),
@@ -49,5 +49,5 @@ export const signIn = async (_actionState: ActionState, formData: FormData) => {
     return fromErrorToActionState(error, formData);
   }
 
-  redirect(ticketsPath());
+  redirect(homePath());
 };

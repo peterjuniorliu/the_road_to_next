@@ -5,8 +5,8 @@ import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
+import {TicketWithMetadata} from "../types";
 import {TicketMoreMenu} from "./ticket-more-menu";
-import type {TicketWithMetadata} from "../types";
 
 type TicketItemProps = {
     ticket: TicketWithMetadata,
@@ -68,6 +68,7 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
             </CardFooter>
             {isDetail ? (
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
+                    {detailButton}
                     {editButton}
                     {moreMenu}
                 </div>
