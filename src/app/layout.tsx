@@ -1,10 +1,12 @@
 import "./globals.css";
 import {Header} from "../components/header";
+import {Sidebar} from "../components/sidebar/components/sidebar";
 import {Suspense} from "react";
 import localFont from "next/font/local";
 import {Toaster} from "../../components/ui/sonner";
 import {ThemeProvider} from "../components/theme/theme-provider";
 import type {Metadata} from "next";
+import {getAuth} from "../features/auth/queries/get-auth";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,11 +25,13 @@ export const metadata: Metadata = {
   description: "My Road to Next application ..."
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const {user} = await getAuth();
+
   return (
     <html suppressHydrationWarning lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
@@ -35,17 +39,20 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <Header />
           </Suspense>
-          <main
-            className="
-              min-h-screen flex-1
-              overflow-y-auto overflow-x-hidden
-              py-24 px-8
-              bg-secondary/20
-              flex flex-col
-            "
-          >
-            {children}
-          </main>
+          <div className="flex h-screen overflow-hidden border-collapse">
+            <Sidebar user={user} />
+            <main
+              className="
+                min-h-screen flex-1
+                overflow-y-auto overflow-x-hidden
+                py-24 px-8
+                bg-secondary/20
+                flex flex-col
+              "
+            >
+              {children}
+            </main>
+          </div>
           <Toaster expand />
         </ThemeProvider>
       </body>

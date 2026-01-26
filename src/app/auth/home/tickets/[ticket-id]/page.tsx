@@ -1,8 +1,11 @@
 import {Heading} from "../../../../../components/heading";
 import {Placeholder} from "../../../../../components/placeholder";
+import {Breadcrumbs} from "../../../../../components/breadcrumbs";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../../../components/ui/card";
 import {getTicket} from "../../../../../features/ticket/queries/get-ticket";
 import {buildTicketNotFoundInfo} from "../../../../error-info";
+import {Separator} from "../../../../../components/ui/separator";
+import {homePath} from "../../../../paths";
 
 export const dynamic = "force-dynamic";
 
@@ -72,6 +75,12 @@ const TicketPage = async ({params}: TicketPageProps) =>
     return (
         <div className="flex-1 flex flex-col gap-y-8">
             <Heading title={ticket.title} />
+            <Breadcrumbs breadcrumbs={[
+                {title: "Home", href: homePath()},
+                {title: ticket.title}
+            ]}
+            />
+            <Separator />
             <div className="px-8 text-center">
                 <p className="text-xl font-semibold">
                     {ticket.content}

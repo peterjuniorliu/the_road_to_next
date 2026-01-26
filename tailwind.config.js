@@ -9,6 +9,10 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        "sidebar-from-left": {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(0)" },
+        },
         animation: {
           "fade-from-top": "fade-from-top 0.5s ease-out",
           "header-from-top": "header-from-top 0.5s ease-out",
@@ -31,6 +35,7 @@ module.exports = {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
+        "sidebar-from-left": "sidebar-from-left 0.5s ease-out",
         "header-from-top": {
           from: { transform: "translateY(-100%)" },
           to: { transform: "translateY(0)" },
