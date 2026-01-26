@@ -1,11 +1,13 @@
 import clsx from "clsx";
 import {LucideArrowUpRightFromSquare, LucideMoreVertical, LucidePencil} from "lucide-react";
+import {isOwner} from "../../auth/utils/is-owner";
 import {Button} from "../../../components/ui/button";
 import Link from "next/link";
 import {toCurrency} from "../../../utils/currency";
 import {CardContent, CardFooter} from "../../../components/ui/card"; 
 import {ticketPath, ticketEditPath} from "../../../app/paths";
 import {TicketWithMetadata} from "../types";
+import {getAuth} from "../../auth/queries/get-auth";
 import {TicketMoreMenu} from "./ticket-more-menu";
 
 type TicketItemProps = {
@@ -13,8 +15,10 @@ type TicketItemProps = {
     isDetail?: boolean 
 };
 
-const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
-{
+const TicketItem = async ({ticket, isDetail}: TicketItemProps) => {
+    const {user} = await getAuth();
+    const isTicketOwner = isOwner(user, ticket);
+    
     const detailButton = (
         <Button variant="outline" size="icon">
             <Link prefetch href={ticketPath(ticket.id)}>
@@ -23,21 +27,21 @@ const TicketItem = ({ticket, isDetail}: TicketItemProps) =>
         </Button>
     );
 
-    const editButton = (
+    const editButton = isTicketOwner ? (
         <Button variant="outline" size="icon">
             <Link prefetch href={ticketEditPath(ticket.id)}>
                 <LucidePencil className="h-4 w-4" />
             </Link>
         </Button>
-    );
+    ) : null;
 
-    const moreMenu = (
+    const moreMenu = isTicketOwner ? (
         <TicketMoreMenu ticket={ticket} trigger={
             <Button variant="outline" size="icon">
                 <LucideMoreVertical className="h-4 w-4" />
             </Button>
         } />
-    );
+    ) : null;
 
     return (
         <div className={clsx("w-full", {

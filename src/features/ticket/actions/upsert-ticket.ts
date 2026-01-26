@@ -1,14 +1,15 @@
 "use server";
 import {revalidatePath} from "next/cache";
+import {getAuthOrRedirect} from "../../../features/auth/queries/get-auth-or-redirect";
 import {z} from "zod";
 import {redirect} from "next/navigation";
-import {ActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state";
+import {ActionState, toActionState, fromErrorToActionState} from "../../../components/form/utils/to-action-state";
 import prisma from "../../../lib/prisma";
-import {getAuth} from "../../auth/queries/get-auth";
 import {setCookieByKey} from "../../../actions/cookies";
-import {signInPath, homePath, ticketPath, ticketsPath} from "../../../app/paths";
+import {homePath, ticketPath, ticketsPath} from "../../../app/paths";
 import {TicketStatus} from "../../../generated/prisma";
 import {toDecimalString} from "../../../utils/currency";
+import {isOwner} from "../../../features/auth/utils/is-owner";
 
 const upsertTicketSchema = z.object({
     title: z.string().min(1).max(191),
@@ -32,7 +33,7 @@ export const upsertTicket = async (
         ? (rawStatus as TicketStatus)
         : undefined;
 
-    const {user} = await getAuth();
+    const {user} = await getAuthOrRedirect();
 
     const result = upsertTicketSchema.safeParse({
         title: typeof title === "string" ? title : "",
@@ -41,10 +42,6 @@ export const upsertTicket = async (
         bounty: typeof bounty === "string" ? bounty : "",
         ...(status ? {status} : {}),
     });
-
-    if (!user) {
-        redirect(signInPath());
-    }
 
     if (!result.success) {
         return {
@@ -64,6 +61,18 @@ export const upsertTicket = async (
     };
 
     try {
+        if (id) {
+            const ticket = await prisma.ticket.findUnique({
+                where: {
+                    id,
+                },
+            });
+
+            if (!ticket || !isOwner(user, ticket)) {
+                return toActionState("ERROR", "Not authorized");
+            }
+        }
+
         if (id) {
             await prisma.ticket.update({
                 where: {id},
