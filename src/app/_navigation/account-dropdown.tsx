@@ -24,7 +24,7 @@ const AccountDropdown = ({user}: AccountDropdownProps) =>
             <DropdownMenuTrigger asChild className="cursor-pointer">
                 <Avatar>
                     <AvatarFallback>
-                        {user.username[0].toUpperCase()}
+                        <LucideUser className="h-4 w-4 text-muted-foreground" />
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
