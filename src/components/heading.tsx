@@ -5,19 +5,22 @@ type HeadingProps = {
   title: string;
   description?: string;
   subtitle?: string;
-  actions?: ReactNode;
+  tabs?: React.ReactNode;
+  actions?: ReactNode
 };
 
 export function Heading({
   title,
   description,
   subtitle,
+  tabs,
   actions,
 }: HeadingProps) {
   const helperText = subtitle ?? description;
 
   return (
     <div className="px-8">
+      {tabs}
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
