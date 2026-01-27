@@ -11,4 +11,4 @@ const PasswordPage = () =>
     );
 };
 
-export default PasswordPage();
+export default PasswordPage;
