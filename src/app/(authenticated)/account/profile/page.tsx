@@ -1,5 +1,5 @@
-import {Heading} from "../../../components/heading";
-import {AccountTabs} from "../../../features/account/components/account-tabs";
+import {Heading} from "../../../../components/heading";
+import {AccountTabs} from "../_navigation/account-tabs";
 
 const ProfilePage = () => 
 {

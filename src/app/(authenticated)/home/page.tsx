@@ -1,12 +1,9 @@
 import {Heading} from "../../../components/heading";
 import {CardCompact} from "../../../components/card-compact";
-import {LucideLogOut} from "lucide-react";
-import {signOut} from "../../../features/auth/actions/sign-out";
-import {SubmitButton} from "../../../components/form/submit-button";
 import {Card, CardContent} from "../../../components/ui/card";
+import {AccountDropdown} from "../../_navigation/account-dropdown";
 import {TicketUpsertForm} from "../../../features/ticket/components/ticket-upsert-form";
 import {getAuth} from "../../../features/auth/queries/get-auth";
-import {HomeClient} from "../../../features/auth/hooks/home-client";
 
 type HomePageProps = {
     searchParams: Promise<{
@@ -28,11 +25,7 @@ const HomePage = async ({searchParams}: HomePageProps) =>
                     Your home place to start
                 </div>
             </div>
-            <HomeClient user={user} />
-            <form action={signOut}>
-                <SubmitButton label="Sign Out" icon={<LucideLogOut />}
-                />
-            </form>
+            {user ? <AccountDropdown user={user} /> : null}
             {isCreated ? (
                 <Card className="w-full max-w-[420px] self-center border-green-500/40 bg-green-50 text-green-900">
                     <CardContent className="py-4 text-center text-sm font-semibold">

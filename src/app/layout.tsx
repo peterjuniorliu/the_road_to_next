@@ -1,6 +1,6 @@
 import "./globals.css";
 import {Header} from "../components/header";
-import {Sidebar} from "../components/sidebar/components/sidebar";
+import {Sidebar} from "./_navigation/sidebar/components/sidebar";
 import {Suspense} from "react";
 import localFont from "next/font/local";
 import {Toaster} from "../../components/ui/sonner";
