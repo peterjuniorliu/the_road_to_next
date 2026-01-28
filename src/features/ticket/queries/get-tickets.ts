@@ -6,6 +6,9 @@ export const getTickets = async (
     searchParams: ParsedSearchParams,
     userId?: string | undefined): Promise<TicketWithMetadata[]> => 
 {
+    const sortKey = searchParams.sortKey ?? "createdAt";
+    const sortOrder = searchParams.sortValue === "asc" ? "asc" : "desc";
+
     return await prisma.ticket.findMany({
         where: {
             userId,
@@ -15,8 +18,7 @@ export const getTickets = async (
             },
         },
         orderBy: {
-            [searchParams.sortKey]:
-            searchParams.sortKey
+            [sortKey]: sortOrder
         },
         include: {
             user: {
