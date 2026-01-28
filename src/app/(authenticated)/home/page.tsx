@@ -7,8 +7,8 @@ import {getAuth} from "../../../features/auth/queries/get-auth";
 
 type HomePageProps = {
     searchParams: Promise<{
-        created?: string
-    }>;
+        created: string
+    }>,
 };
 
 const HomePage = async ({searchParams}: HomePageProps) => 

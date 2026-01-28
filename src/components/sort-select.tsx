@@ -1,0 +1,56 @@
+"use client";
+import {useQueryStates} from "nuqs";
+import {sortOptions, sortParser} from "../features/ticket/search-params";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from "./ui/select";
+
+export type SortSelectOption = {
+    sortValue: string,
+    sortKey: string,
+    label: string 
+};
+
+type SortObject = {
+    sortValue: string,
+    sortKey: string 
+};
+
+type SortSelectProps = {
+    value: SortObject,
+    onChange: (sort: SortObject) => void,
+    options: SortSelectOption[]
+};
+
+const SortSelect = ({value, onChange, options}: SortSelectProps) =>
+{
+    const handleSort = (compositeKey: string) => {
+        const [sortKey, sortValue] = compositeKey.split("_");
+        
+        onChange({
+            sortKey,
+            sortValue
+        });
+    };
+
+    return (
+        <Select onValueChange={handleSort} defaultValue={`${value.sortKey}_${value.sortValue}`}>
+            <SelectTrigger>
+                <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+                {options.map((option) => (
+                    <SelectItem key={`${option.sortKey}${option.sortValue}`} value={`${option.sortKey}_${option.sortValue}`}>
+                        {option.label}
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
+    );
+};
+
+export {SortSelect};
