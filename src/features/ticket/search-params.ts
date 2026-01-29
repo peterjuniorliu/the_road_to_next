@@ -1,5 +1,4 @@
-import { flightRouterStateSchema } from "next/dist/server/app-render/types";
-import {createSearchParamsCache, parseAsString} from "nuqs/server";
+import {createSearchParamsCache, parseAsString, parseAsInteger} from "nuqs/server";
 
 export const searchParser = parseAsString.withDefault("").withOptions({
     shallow: false,
@@ -11,6 +10,16 @@ export const sortParser = {
     sortValue: parseAsString.withDefault("desc")
 };
 
+export const paginationParser = {
+    page: parseAsInteger.withDefault(0),
+    size: parseAsInteger.withDefault(2)
+};
+
+export const paginationOptions = {
+    shallow: false,
+    clearOnDefault: true 
+};
+
 export const sortOptions = {
     shallow: false,
     clearOnDefault: true 
@@ -18,7 +27,8 @@ export const sortOptions = {
 
 export const searchParamsCache = createSearchParamsCache({
     search: searchParser,
-    ...sortParser  
+    ...sortParser,  
+    ...paginationParser
 });
 
 export type ParsedSearchParams = Awaited<

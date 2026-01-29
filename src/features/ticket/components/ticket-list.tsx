@@ -4,6 +4,7 @@ import {TicketSearchInput} from "./ticket-search-input";
 import {Placeholder} from "../../../components/placeholder";
 import {TicketItem} from "./ticket-item";
 import {Card, CardHeader, CardTitle} from "../../../components/ui/card";
+import {TicketPagination} from "./ticket-pagination";
 import {TICKET_ICONS} from "../constants";
 import {ParsedSearchParams} from "../search-params";
 
@@ -55,6 +56,9 @@ const TicketList = async ({searchParams, userId}: TicketListProps) =>
             ))) : (
                 <Placeholder label="No tickets found" />
             )}
+            <div className="w-full max-w-[420px]">
+                <TicketPagination />
+            </div>
         </div>
     );
 };
