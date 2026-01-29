@@ -15,7 +15,9 @@ type TicketListProps = {
 
 const TicketList = async ({searchParams, userId}: TicketListProps) => 
 {
-    const tickets = await getTickets(searchParams, userId);
+    const {list: tickets, 
+           metadata: ticketMetadata} 
+    = await getTickets(searchParams, userId);
 
     return (
         <div className="flex-1 flex flex-col items-center gap-y-4 animate-fade-from-top">
@@ -39,7 +41,7 @@ const TicketList = async ({searchParams, userId}: TicketListProps) =>
                     }
                 ]} />
             </div>
-            {tickets.length ? (tickets.map(ticket => (
+            {tickets.length ? (tickets.map((ticket) => (
                 <Card key={ticket.id} className="relative w-full max-w-[520px]">
                     <CardHeader className="items-start gap-y-4">
                         <CardTitle className="flex items-center justify-start gap-x-2">
@@ -57,7 +59,7 @@ const TicketList = async ({searchParams, userId}: TicketListProps) =>
                 <Placeholder label="No tickets found" />
             )}
             <div className="w-full max-w-[420px]">
-                <TicketPagination />
+                <TicketPagination paginatedTicketMetadata={ticketMetadata} />
             </div>
         </div>
     );

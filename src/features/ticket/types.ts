@@ -7,3 +7,11 @@ export type TicketWithMetadata = Prisma.TicketGetPayload<{
         }
     }
 }>;
+
+export type PaginatedTicketResult = {
+    list: TicketWithMetadata[];
+    metadata: {
+        count: number;
+        hasNextPage: boolean;
+    };
+};

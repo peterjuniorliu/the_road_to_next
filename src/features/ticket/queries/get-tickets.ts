@@ -1,31 +1,50 @@
 import prisma from "../../../lib/prisma";
 import {ParsedSearchParams} from "../search-params";
-import {TicketWithMetadata} from "../types";
+import {PaginatedTicketResult} from "../types";
 
 export const getTickets = async (
     searchParams: ParsedSearchParams,
-    userId?: string | undefined): Promise<TicketWithMetadata[]> => 
+    userId?: string | undefined): Promise<PaginatedTicketResult> => 
 {
-    const sortKey = searchParams.sortKey ?? "createdAt";
-    const sortOrder = searchParams.sortValue === "asc" ? "asc" : "desc";
+    const where = {
+        userId,
+        title: {
+            contains: searchParams.search,
+            mode: "insensitive" as const 
+        },
+    };
 
-    return await prisma.ticket.findMany({
-        where: {
-            userId,
-            title: {
-                contains: searchParams.search,
-                mode: "insensitive"
+    const skip = searchParams.page * searchParams.size;
+    const take = searchParams.size;
+
+    const [tickets, count] = await prisma.$transaction([ 
+        prisma.ticket.findMany({
+            where,
+            skip,
+            take,
+            orderBy: {
+                [searchParams.sortKey]:
+                searchParams.sortValue,
             },
-        },
-        orderBy: {
-            [sortKey]: sortOrder
-        },
-        include: {
-            user: {
-                select: {
-                    username: true,
-                }
+            include: {
+                user:{
+                    select: {
+                        username: true,
+                    },
+                },
             }
-        }
-    });
+        }), 
+        
+        prisma.ticket.count({
+            where,
+        })
+    ]);
+
+    return {
+        list: tickets,
+        metadata: {
+            count,
+            hasNextPage: count > skip + take
+        }, 
+    };
 };
