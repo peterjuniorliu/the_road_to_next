@@ -1,10 +1,10 @@
 import {Heading} from "../../../../../components/heading";
 import {Placeholder} from "../../../../../components/placeholder";
 import {Breadcrumbs} from "../../../../../components/breadcrumbs";
+import {Comments} from "../../../../../features/comment/components/comments"; 
+import {getComments} from "../../../../../features/comment/queries/get-comments";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../../../components/ui/card";
 import {getTicket} from "../../../../../features/ticket/queries/get-ticket";
-import {getComments} from "../../../../../features/comment/queries/get-comments";
-import {Comments} from "../../../../../features/comment/components/comments";
 import {buildTicketNotFoundInfo} from "../../../../error-info";
 import {Separator} from "../../../../../components/ui/separator";
 import {homePath} from "../../../../paths";
@@ -20,8 +20,15 @@ type TicketPageProps = {
 const TicketPage = async ({params}: TicketPageProps) => 
 {
     const {["ticket-id"]: ticketId} = await params;
-    const ticket = await getTicket(ticketId);
-    const comments = await getComments(ticketId);
+
+    const ticketPromise = getTicket(ticketId);
+
+    const commentsPromise = getComments(ticketId);
+
+    const [ticket, comments] = await Promise.all([
+        ticketPromise,
+        commentsPromise
+    ]);
 
     if (!ticket) {
         const errorInfo = buildTicketNotFoundInfo(ticketId);
