@@ -6,7 +6,7 @@ export type TicketWithMetadata = Prisma.TicketGetPayload<{
             select: {username: true}
         }
     }
-}>;
+}> & {isOwner: boolean};
 
 export type PaginatedTicketResult = {
     list: TicketWithMetadata[];

@@ -16,6 +16,7 @@ model User {
   passwordHash String
   sessions     Session[]
   tickets      Ticket[]
+  comments     Comment[]
 }
 
 model Session {
@@ -38,6 +39,21 @@ model Ticket {
   status    TicketStatus @default(OPEN)
   user      User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
+  comment   Comment[]
+
+  @@index([userId])
+}
+
+model Comment {
+  id        String      @id  @default(cuid())
+  createdAt DateTime    @default(now())
+  content   String      @db.VarChar(1024)
+  ticket    Ticket      @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  ticketId  String      
+  user      User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+
+  @@index([ticketId])
   @@index([userId])
 }
 
