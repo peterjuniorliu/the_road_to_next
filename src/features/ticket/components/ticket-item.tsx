@@ -4,7 +4,7 @@ import {LucideArrowUpRightFromSquare, LucideMoreVertical, LucidePencil} from "lu
 import {toCurrency} from "../../../utils/currency";
 import {Button} from "../../../components/ui/button";
 import {CardContent, CardFooter} from "../../../components/ui/card";
-import Link from "next/link";+"../../../components/ui/card"; 
+import Link from "next/link";
 import {ticketPath, ticketEditPath} from "../../../app/paths";
 import {TicketWithMetadata} from "../types";
 import {TicketMoreMenu} from "./ticket-more-menu";
@@ -18,9 +18,9 @@ type TicketItemProps = {
 const TicketItem = async ({ticket, isDetail, comments}: TicketItemProps) => {
     const detailButton = (
         <Button variant="outline" size="icon">
- +           <Link prefetch href={ticketPath(ticket.id)}>
+            <Link prefetch href={ticketPath(ticket.id)}>
                 <LucideArrowUpRightFromSquare className="w-4 h-4" />
-2            </Link>
+            </Link>
         </Button>
     );
 

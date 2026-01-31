@@ -3,6 +3,8 @@ import {Placeholder} from "../../../../../components/placeholder";
 import {Breadcrumbs} from "../../../../../components/breadcrumbs";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../../../../../components/ui/card";
 import {getTicket} from "../../../../../features/ticket/queries/get-ticket";
+import {getComments} from "../../../../../features/comment/queries/get-comments";
+import {Comments} from "../../../../../features/comment/components/comments";
 import {buildTicketNotFoundInfo} from "../../../../error-info";
 import {Separator} from "../../../../../components/ui/separator";
 import {homePath} from "../../../../paths";
@@ -19,6 +21,7 @@ const TicketPage = async ({params}: TicketPageProps) =>
 {
     const {["ticket-id"]: ticketId} = await params;
     const ticket = await getTicket(ticketId);
+    const comments = await getComments(ticketId);
 
     if (!ticket) {
         const errorInfo = buildTicketNotFoundInfo(ticketId);
@@ -89,6 +92,7 @@ const TicketPage = async ({params}: TicketPageProps) =>
                     {ticket.status}
                 </p>
             </div>
+            <Comments ticketId={ticketId} comments={comments} />
         </div>
     );
 };
