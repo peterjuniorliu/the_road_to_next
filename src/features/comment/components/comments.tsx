@@ -33,15 +33,30 @@ const Comments = async ({ticketId, paginatedComments}: CommentsProps) =>
         setMetadata(morePaginatedComments.metadata);
     };
 
+    const handleDeleteComment = (id: string) => {
+        setComments((previousComments) => previousComments.filter((comment) => comment.id !== id));
+    };
+
+    const handleCreateComment = (comment: CommentWithMetadata | undefined) => {
+        if (!comment) {
+            return;
+        }
+
+        setComments((previousComments) => [comment, ...previousComments]);
+    };
+
     return (
         <div>
-            <CardCompact title="Create Comment" description="A new comment will be created" content={<CommentCreateForm ticketId={ticketId} />} 
-            />
+            <CardCompact title="Create Comment" description="A new comment will be created" content={
+                <CommentCreateForm ticketId={ticketId} onCreateComment={handleCreateComment} />
+            } />
             <div className="flex flex-col gap-y-2 ml-8">
                 {comments.map((comment) => (
-                    <CommentItem key={comment.id} buttons={
-                        [...(comment.isOwner ? [<CommentDeleteButton key="0" id={comment.id} />] : [])]
-                    } comment={comment} 
+                    <CommentItem key={comment.id} buttons={[
+                        ...(comment.isOwner ? [
+                            <CommentDeleteButton key="0" id={comment.id} onDeleteComment={handleDeleteComment} />
+                        ] : []),
+                    ]} comment={comment}
                     />
                 ))}
             </div>

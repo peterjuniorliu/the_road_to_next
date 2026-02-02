@@ -46,36 +46,36 @@ const TicketItem = async ({ticket, isDetail, comments}: TicketItemProps) => {
             "max-w-[420px]": !isDetail
         })}
         >
-            <div className="flex gap-x-2">
-                <CardContent className="flex items-center py-6">
-                    <span className={clsx("whitespace-break-spaces text-lg", {
-                        "line-clamp-3": !isDetail
-                    })}
-                    >
-                        <span className="flex flex-col items-center gap-y-2 w-[280px] translate-x-10 justify-center">
-                            Updated at {ticket.updatedAt.toDateString()}
-                        </span>
-                        <span className="block w-[300px] translate-x-36 text-left">
-                            {ticket.status}
-                        </span>
-                    </span>
+            <div className="relative">
+                <CardContent className="py-6">
+                    <div className="flex items-start justify-between gap-x-8">
+                        <div className="min-w-0">
+                            <p className="text-sm text-muted-foreground">
+                                Updated at {ticket.updatedAt.toDateString()}
+                            </p>
+                            <p className="mt-2 text-sm font-semibold tracking-wide text-foreground">
+                                {ticket.status}
+                            </p>
+                        </div>
+                        <div className="flex items-start gap-x-6 text-right">
+                            <div className="text-sm text-muted-foreground">
+                                <p>{ticket.deadline ?? "No deadline"}</p>
+                                <p>by {ticket.user?.username ?? "Unknown"}</p>
+                            </div>
+                            <p className="text-sm font-semibold text-foreground">
+                                {toCurrency(ticket.bounty)}
+                            </p>
+                        </div>
+                    </div>
                 </CardContent>
-                <CardFooter className="flex justify-between">
-                    <p className="text-sm text-muted-foreground">
-                        {ticket.deadline} by {ticket.user?.username ?? "Unknown"}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        {toCurrency(ticket.bounty)}
-                    </p>
-                </CardFooter>
                 {isDetail ? (
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
+                    <div className="absolute right-4 top-4 flex flex-col gap-y-2">
                         {detailButton}
                         {editButton}
                         {moreMenu}
                     </div>
                 ) : (
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 gap-y-2">
+                    <div className="absolute right-4 top-4 flex flex-col gap-y-2">
                         {detailButton}
                         {editButton}
                     </div>
