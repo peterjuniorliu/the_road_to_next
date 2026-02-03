@@ -2,48 +2,71 @@
 import {CommentCreateForm} from "./comment-create-form";
 import {getComments} from "../queries/get-comments";
 import {CommentWithMetadata} from "../types";
-import {Button} from "../../../components/ui/button";
+import {useEffect} from "react";
+import {useInView} from "react-intersection-observer"; 
+import {Skeleton} from "../../../components/ui/skeleton";
 import {CommentDeleteButton} from "./comment-delete-button";
 import {CardCompact} from "../../../components/card-compact";
-import {useState} from "react";
+import {InfiniteData, useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import {PaginatedData} from "../../../types/pagination";
 import {CommentItem} from "./comment-item";
 
-type CommentsProps = {
-    ticketId: string,
-    paginatedComments: PaginatedData<CommentWithMetadata, {
-        id: string,
-        createdAt: number
-    }>
+type CommentsCursor = {
+    id: string,
+    createdAt: number
 };
 
-const Comments = async ({ticketId, paginatedComments}: CommentsProps) => 
+type PaginatedComments = PaginatedData<CommentWithMetadata, CommentsCursor>;
+
+type CommentsProps = {
+    ticketId: string,
+    paginatedComments: PaginatedComments
+};
+
+const Comments = ({ticketId, paginatedComments}: CommentsProps) => 
 {
-    const [comments, setComments] = useState(paginatedComments.list);
+    const queryClient = useQueryClient();
+    const queryKey = ["comments", ticketId];
 
-    const [metadata, setMetadata] = useState(paginatedComments.metadata);
+    const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery<
+        PaginatedComments,
+        Error,
+        InfiniteData<PaginatedComments>,
+        string[],
+        CommentsCursor | undefined
+    >({
+        queryKey,
+        queryFn: ({pageParam}) => getComments(ticketId, pageParam),
+        initialPageParam: undefined,
+        initialData: {
+            pages: [paginatedComments],
+            pageParams: [undefined],
+        },
+        getNextPageParam: (lastPage) =>
+            lastPage.metadata.hasNextPage ? lastPage.metadata.cursor : undefined,
+    });
 
-    const handleMore = async () => {
-        const morePaginatedComments = await getComments(ticketId, metadata.cursor);
+    const comments = data?.pages.flatMap((page) => page.list) ?? [];
 
-        const moreComments = morePaginatedComments.list
-
-        setComments([...comments, ...moreComments]);
-
-        setMetadata(morePaginatedComments.metadata);
+    const handleDeleteComment = async (_id: string) => {
+        await queryClient.invalidateQueries({queryKey: ["comments", ticketId]});
     };
 
-    const handleDeleteComment = (id: string) => {
-        setComments((previousComments) => previousComments.filter((comment) => comment.id !== id));
-    };
-
-    const handleCreateComment = (comment: CommentWithMetadata | undefined) => {
+    const handleCreateComment = async (comment: CommentWithMetadata | undefined) => {
         if (!comment) {
             return;
         }
 
-        setComments((previousComments) => [comment, ...previousComments]);
+        await queryClient.invalidateQueries({queryKey: ["comments", ticketId]});
     };
+
+    const {ref, inView} = useInView();
+
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+        }
+    }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage]);
 
     return (
         <div>
@@ -59,12 +82,25 @@ const Comments = async ({ticketId, paginatedComments}: CommentsProps) =>
                     ]} comment={comment}
                     />
                 ))}
+                {isFetchingNextPage && (
+                    <div>
+                        <div className="flex gap-x-2">
+                            <Skeleton className="h=[82px] w-full" />
+                            <Skeleton className="h-[40px] w-[40px]" />
+                        </div>
+                        <div className="flex gap-x-2">
+                            <Skeleton className="h-[82px] w-full" />
+                            <Skeleton className="h-[40px] w-[40px]" />
+                        </div>
+                    </div>
+                )}
             </div>
-            <div className="flex flex-col justify-center ml-8">
-                {metadata.hasNextPage && (<Button variant="ghost" onClick={handleMore} >
-                    More 
-                </Button>)
-                }
+            <div ref={ref} >
+                {!hasNextPage && (
+                    <p className="text-right text-xsitalic">
+                        No more comments.
+                    </p>  
+                )}
             </div>
         </div>
     );

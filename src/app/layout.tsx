@@ -1,6 +1,7 @@
 import "./globals.css";
 import {Header} from "../components/header";
 import {Sidebar} from "./_navigation/sidebar/components/sidebar";
+import {ReactQueryProvider} from "./_providers/react-query/react-query-provider";
 import {Suspense} from "react";
 import localFont from "next/font/local";
 import {Toaster} from "../../components/ui/sonner";
@@ -38,24 +39,26 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NuqsAdapter>
           <ThemeProvider>
-            <Suspense fallback={null}>
-              <Header />
-            </Suspense>
-            <div className="flex h-screen overflow-hidden border-collapse">
-              <Sidebar user={user} />
-              <main
-                className="
-                  min-h-screen flex-1
-                  overflow-y-auto overflow-x-hidden
-                  py-24 px-8
-                  bg-secondary/20
-                  flex flex-col
-                "
-              >
-                {children}
-              </main>
-            </div>
-            <Toaster expand />
+            <ReactQueryProvider>
+              <Suspense fallback={null}>
+                <Header />
+              </Suspense>
+              <div className="flex h-screen overflow-hidden border-collapse">
+                <Sidebar user={user} />
+                <main
+                  className="
+                    min-h-screen flex-1
+                    overflow-y-auto overflow-x-hidden
+                    py-24 px-8
+                    bg-secondary/20
+                    flex flex-col
+                  "
+                >
+                  {children}
+                </main>
+              </div>
+              <Toaster expand />
+            </ReactQueryProvider>
           </ThemeProvider>
         </NuqsAdapter>
       </body>
